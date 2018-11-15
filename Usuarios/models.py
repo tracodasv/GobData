@@ -1,40 +1,5 @@
 from django.db import models
-from .Alcaldias.models import Municipio
-
-# Create your models here.
-class Persona(models.Model):
-    """Model definition for Persona."""
-
-    primerNombre = models.CharField(("Primer Nombre"), max_length=50)
-    segundoNombre = models.CharField(("Segundo Nombre"), max_length=50)
-    primerApellido = models.CharField(("Primer Apellido"), max_length=50)
-    segundoApellido = models.CharField(("Segundo Apellido"), max_length=50)
-    dui = models.IntegerField(("DUI"))
-    nit = models.IntegerField(("NIT"))
-    fechaNacimiento = models.DateField(("Nacimiento"), auto_now=False, auto_now_add=False)
-    fechaRegistro = models.DateField(("Registro"), auto_now=False, auto_now_add=True)
-    tipoPersona = models.IntegerField(("Tipo de Persona"))
-    genero = models.IntegerField(("Genero"))
-    telefonoCasa = models.IntegerField(("Telefono Casa"))
-    celular = models.IntegerField(("Telefono Movil"))
-    nivelEducativo = models.IntegerField(("Nivel Educativo"))
-    ocupacion = models.CharField(("Ocupacion"), max_length=100)
-    contacto = models.IntegerField(("Contactar a"))
-    firma = models.ImageField(("Firma"), upload_to=None, height_field=None, width_field=None, max_length=None)
-    nacionalidad = models.ForeignKey(Pais, verbose_name=("Pais"), on_delete=models.CASCADE)
-    datosResidencia = models.OneToOneField(DatosResidencia, verbose_name=("Datos de Residencia"), on_delete=models.CASCADE)
-    institucion = models.ManyToManyField("Institucion", verbose_name=("Institucion"))
-
-    class Meta:
-        """Meta definition for Persona."""
-
-        verbose_name = 'Persona'
-        verbose_name_plural = 'Personas'
-
-    def __str__(self):
-        """Unicode representation of Persona."""
-        pass
-        
+from Alcaldias.models import Municipio
 
 class Pais(models.Model):
         """Model definition for Pais."""
@@ -87,3 +52,36 @@ class DatosResidencia(models.Model):
         pass
 
 
+class Persona(models.Model):
+    """Model definition for Persona."""
+
+    primerNombre = models.CharField(("Primer Nombre"), max_length=50)
+    segundoNombre = models.CharField(("Segundo Nombre"), max_length=50)
+    primerApellido = models.CharField(("Primer Apellido"), max_length=50)
+    segundoApellido = models.CharField(("Segundo Apellido"), max_length=50)
+    dui = models.IntegerField(("DUI"))
+    nit = models.IntegerField(("NIT"))
+    fechaNacimiento = models.DateField(("Nacimiento"), auto_now=False, auto_now_add=False)
+    fechaRegistro = models.DateField(("Registro"), auto_now=False, auto_now_add=True)
+    tipoPersona = models.IntegerField(("Tipo de Persona"))
+    genero = models.IntegerField(("Genero"))
+    telefonoCasa = models.IntegerField(("Telefono Casa"))
+    celular = models.IntegerField(("Telefono Movil"))
+    nivelEducativo = models.IntegerField(("Nivel Educativo"))
+    ocupacion = models.CharField(("Ocupacion"), max_length=100)
+    contacto = models.IntegerField(("Contactar a"))
+    firma = models.ImageField(("Firma"), upload_to=None, height_field=None, width_field=None, max_length=None)
+    nacionalidad = models.ForeignKey(Pais, verbose_name=("Pais"), on_delete=models.CASCADE)
+    datosResidencia = models.OneToOneField(DatosResidencia, verbose_name=("Datos de Residencia"), on_delete=models.CASCADE)
+    institucion = models.ManyToManyField("Institucion", verbose_name=("Institucion"))
+
+    class Meta:
+        """Meta definition for Persona."""
+
+        verbose_name = 'Persona'
+        verbose_name_plural = 'Personas'
+
+    def __str__(self):
+        """Unicode representation of Persona."""
+        pass
+        

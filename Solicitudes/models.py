@@ -1,26 +1,23 @@
 from django.db import models
 from django.urls import reverse
-from .Alcaldias.models import Departamento,Municipio,Alcaldia
-from .Usuarios.models import Persona
+from Alcaldias.models import Municipio,Alcaldia
+from Usuarios.models import Persona
 
 
-class Solicitud(models.Model):
-
-    fechaCreacion = models.DateField(("Apertura De Solicitud"),auto_now=False, auto_now_add=True)
-    fechaModificacion = models.DateField(("Ultima Modificacion"),auto_now=True, auto_now_add=False)
-    estado = models.CharField(("Estado"), max_length=100)
-    etapa = models.ForeignKey("Etapa", on_delete=models.CASCADE)
-    detalleSolicitud = models.ForeignKey(DetalleSolicitud, verbose_name=("Detalle Solicitud"), on_delete=models.CASCADE) 
+class Requerimiento(models.Model):
+    categoria = models.CharField(("Categoria"),blank=True, max_length=50)
+    detalle = models.TextField(("Lo que solicita"))
 
     class Meta:
-        verbose_name = ("Solicitud")
-        verbose_name_plural = ("Solicitudes")
+        verbose_name = ("Requerimiento")
+        verbose_name_plural = ("Requerimientos")
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("Solicitud_detail", kwargs={"pk": self.pk})
+        return reverse("Requerimiento_detail", kwargs={"pk": self.pk})
+
 
 
 class DetalleSolicitud(models.Model):
@@ -41,21 +38,6 @@ class DetalleSolicitud(models.Model):
         return reverse("DetalleSolicitud_detail", kwargs={"pk": self.pk})
 
 
-class Requerimiento(models.Model):
-    categoria = models.CharField(("Categoria"),blank=True, max_length=50)
-    detalle = models.TextField(("Lo que solicita"))
-
-    class Meta:
-        verbose_name = ("Requerimiento")
-        verbose_name_plural = ("Requerimientos")
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse("Requerimiento_detail", kwargs={"pk": self.pk})
-
-
 class Etapa(models.Model):
     progreso = models.IntegerField(("Progreso de Solicitud"))
     nombreEtapa = models.CharField(("Etapa"), max_length=50)
@@ -70,3 +52,22 @@ class Etapa(models.Model):
 
     def get_absolute_url(self):
         return reverse("Etapa_detail", kwargs={"pk": self.pk})
+
+
+class Solicitud(models.Model):
+
+    fechaCreacion = models.DateField(("Apertura De Solicitud"),auto_now=False, auto_now_add=True)
+    fechaModificacion = models.DateField(("Ultima Modificacion"),auto_now=True, auto_now_add=False)
+    estado = models.CharField(("Estado"), max_length=100)
+    etapa = models.ForeignKey("Etapa", on_delete=models.CASCADE)
+    detalleSolicitud = models.OneToOneField(DetalleSolicitud, verbose_name=("Detalle Solicitud"), on_delete=models.CASCADE) 
+
+    class Meta:
+        verbose_name = ("Solicitud")
+        verbose_name_plural = ("Solicitudes")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("Solicitud_detail", kwargs={"pk": self.pk})

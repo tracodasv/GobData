@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import Solicitud, DetalleSolicitud, Requerimiento, Etapa
 
-# Register your models here.
+
+admin.site.register(Solicitud)
+admin.site.register(DetalleSolicitud)
+admin.site.register(Requerimiento)
+admin.site.register(Etapa)

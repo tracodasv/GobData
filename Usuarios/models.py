@@ -14,9 +14,7 @@ class Pais(models.Model):
             verbose_name = 'Pais'
             verbose_name_plural = 'Paises'
     
-        def __str__(self):
-            """Unicode representation of Pais."""
-            pass
+       
     
 
 class Institucion(models.Model):
@@ -30,9 +28,7 @@ class Institucion(models.Model):
             verbose_name = 'Institucion'
             verbose_name_plural = 'Instituciones'
     
-        def __str__(self):
-            """Unicode representation of Institucion."""
-            pass
+       
 
 class DatosResidencia(models.Model):
     """Model definition for DatosResidencia."""
@@ -47,9 +43,6 @@ class DatosResidencia(models.Model):
         verbose_name = 'DatosResidencia'
         verbose_name_plural = 'DatosResidencias'
 
-    def __str__(self):
-        """Unicode representation of DatosResidencia."""
-        pass
 
 
 class Persona(models.Model):
@@ -80,8 +73,3 @@ class Persona(models.Model):
 
         verbose_name = 'Persona'
         verbose_name_plural = 'Personas'
-
-    def __str__(self):
-        """Unicode representation of Persona."""
-        pass
-        

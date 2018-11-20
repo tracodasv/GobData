@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Alcaldia,Municipio,Departamento
 
-# Register your models here.
+admin.site.register(Alcaldia)
+admin.site.register(Municipio)
+admin.site.register(Departamento)
+

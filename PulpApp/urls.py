@@ -20,5 +20,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r"^usuarios/$", include('usuarios.urls',namespace='usuarios')),
-    
+    url(r"^usuarios/",include('Usuarios.urls') ),
+    url(r"^solicitudes/",include('Solicitudes.urls') ),
+    url(r"^alcaldias/",include('Alcaldias.urls') ),  
 ]

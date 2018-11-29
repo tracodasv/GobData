@@ -12,9 +12,6 @@ class Requerimiento(models.Model):
         verbose_name = ("Requerimiento")
         verbose_name_plural = ("Requerimientos")
 
-    def __str__(self):
-        return self.name
-
     def get_absolute_url(self):
         return reverse("Requerimiento_detail", kwargs={"pk": self.pk})
 
@@ -32,7 +29,7 @@ class DetalleSolicitud(models.Model):
         verbose_name_plural = ("DetalleSolicitudes")
 
     def __str__(self):
-        return self.name
+        return self.persona.PrimerNombre
 
     def get_absolute_url(self):
         return reverse("DetalleSolicitud_detail", kwargs={"pk": self.pk})
@@ -48,7 +45,7 @@ class Etapa(models.Model):
         verbose_name_plural = ("Etapas")
 
     def __str__(self):
-        return self.name
+        return (self.nombreEtapa)
 
     def get_absolute_url(self):
         return reverse("Etapa_detail", kwargs={"pk": self.pk})
@@ -67,7 +64,7 @@ class Solicitud(models.Model):
         verbose_name_plural = ("Solicitudes")
 
     def __str__(self):
-        return self.name
+        return (self.fechaCreacion)
 
     def get_absolute_url(self):
         return reverse("Solicitud_detail", kwargs={"pk": self.pk})

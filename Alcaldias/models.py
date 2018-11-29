@@ -11,7 +11,7 @@ class Departamento(models.Model):
 
     def __str__(self):
         """Unicode representation of Departamento."""
-        pass
+        return self.nombreDepartamento
 
 
 class Municipio(models.Model):
@@ -26,8 +26,7 @@ class Municipio(models.Model):
         verbose_name_plural = 'Municipios'
 
     def __str__(self):
-        """Unicode representation of Municipio."""
-        pass
+        return self.nombreMunicipio
 
 
 class Alcaldia(models.Model):
@@ -43,5 +42,5 @@ class Alcaldia(models.Model):
 
     def __str__(self):
         """Unicode representation of Alcaldia."""
-        pass
+        return self.municipio
 

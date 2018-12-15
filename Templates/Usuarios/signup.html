@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+{% block ttitle %}
+    Signup
+{% endblock ttitle %}
+
+    
+{% block container %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="primerNombre">Primer Nombre</label>
+        <input id="primerNombre" name="primerNombre" class="form-control" type="text">
+        <label for="segundoNombre">Segundo Nombre</label>
+        <input id="segundoNombre" name="segundoNombre" class="form-control" type="text">
+        <label for="primerApellido">Primer Apellido</label>
+        <input id="primerApellido" name="primerApellido" class="form-control" type="text">
+        <label for="segundoApellido">Segundo Apellido</label>
+        <input id="segundoApellido" name="segundoApellido" class="form-control" type="text">
+        <label for="documento">Documento No</label>
+        <input id="documento" name="documento" placeholder="999999999" class="form-control" type="number">
+        <label for="username">E-mail</label>
+        <input id="username" name="username" placeholder="alguien@ejemplo.com" class="form-control" type="email">
+        <label for="password">E-mail</label>
+        <input id="password" name="password"  class="form-control" type="password">
+        
+
+        <button class="btn btn-success btn-block mt-5" type="submit">Registrarme</button>
+
+    </div>
+</form>
+{% endblock container %}
+    

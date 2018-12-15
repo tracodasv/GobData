@@ -12,6 +12,7 @@ class PersonaForm(forms.ModelForm):
                     'segundoApellido',
                     'dui',
                     'fechaNacimiento',
+                    'nit',
                     ]
         labels = {
                     'primerNombre':'Primer Nombre',
@@ -20,6 +21,7 @@ class PersonaForm(forms.ModelForm):
                     'segundoApellido':'Segundo Apellido',
                     'dui':'DUI',
                     'fechaNacimiento':'Fecha De Nacimiento',
+                    'nit':'NIT',
                     }
 
         widgets = {
@@ -27,6 +29,7 @@ class PersonaForm(forms.ModelForm):
                     'segundoNombre':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'}),
                     'primerApellido':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'}),
                     'segundoApellido':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'}),
-                    'dui':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12'}),
+                    'dui':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'number'}),
+                    'nit':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'number'}),
                     'fechaNacimiento':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'date'}),
-        }
+                    }

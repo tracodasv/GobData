@@ -1,9 +1,10 @@
 from django.urls import path
-from django.conf.urls import url,include
+from django.conf.urls import url,include,nuevasolicitud
 from .views import index
+
 app_name = 'solicitudes'
 urlpatterns = [
-    url(r"^$",index,name='index' )
-    #url(r"^usuarios/$", include('usuarios.urls',namespace='usuarios')),
-    
+    url(r"^$", index, name="index"),
+    path('nuevaSolicitud/', nuevasolicitud, name='nuevaSolicitud'),
 ]
+ 

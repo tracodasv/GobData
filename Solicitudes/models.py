@@ -3,68 +3,77 @@ from django.urls import reverse
 from Alcaldias.models import Municipio,Alcaldia
 from Usuarios.models import Persona
 
-
-class Requerimiento(models.Model):
-    categoria = models.CharField(("Categoria"),blank=True, max_length=50)
-    detalle = models.TextField(("Lo que solicita"))
-
-    class Meta:
-        verbose_name = ("Requerimiento")
-        verbose_name_plural = ("Requerimientos")
-
-    def get_absolute_url(self):
-        return reverse("Requerimiento_detail", kwargs={"pk": self.pk})
-
-
-
-class DetalleSolicitud(models.Model):
-    
-    firmaSolicitante = models.ImageField(("Firma"), upload_to=None, height_field=None, width_field=None, max_length=None)
-    persona = models.ForeignKey(Persona, verbose_name=("Solicitante"), on_delete=models.CASCADE,blank=True,null=True)
-    requerimiento = models.ForeignKey("Requerimiento", verbose_name=("Requerimiento"), on_delete=models.CASCADE)
-    alcaldia = models.ForeignKey(Alcaldia, verbose_name=("Alcaldia"), on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = ("DetalleSolicitud")
-        verbose_name_plural = ("DetalleSolicitudes")
-
-    def __str__(self):
-        return self.persona.PrimerNombre
-
-    def get_absolute_url(self):
-        return reverse("DetalleSolicitud_detail", kwargs={"pk": self.pk})
-
-
 class Etapa(models.Model):
-    progreso = models.IntegerField(("Progreso de Solicitud"))
-    nombreEtapa = models.CharField(("Etapa"), max_length=50)
-    
+    """Model definition for Etapa."""
+
+    nombreEtapa = models.CharField(("Etapa"), max_length=100)
 
     class Meta:
-        verbose_name = ("Etapa")
-        verbose_name_plural = ("Etapas")
+        """Meta definition for Etapa."""
+
+        verbose_name = 'Etapa'
+        verbose_name_plural = 'Etapas'
 
     def __str__(self):
-        return (self.nombreEtapa)
-
-    def get_absolute_url(self):
-        return reverse("Etapa_detail", kwargs={"pk": self.pk})
+        """Unicode representation of Etapa."""
+        return '{}'.format(self.nombreEtapa)
 
 
 class Solicitud(models.Model):
+    """Model definition for Solicitud."""
 
-    fechaCreacion = models.DateField(("Apertura De Solicitud"),auto_now=False, auto_now_add=True)
-    fechaModificacion = models.DateField(("Ultima Modificacion"),auto_now=True, auto_now_add=False)
-    estado = models.CharField(("Estado"), max_length=100)
-    etapa = models.ForeignKey("Etapa", on_delete=models.CASCADE)
-    detalleSolicitud = models.OneToOneField(DetalleSolicitud, verbose_name=("Detalle Solicitud"), on_delete=models.CASCADE) 
-
+    fechaCreacion = models.DateTimeField(("Fecha de Creacion"), auto_now=False, auto_now_add=True)
+    solicitante = models.ForeignKey(Persona, verbose_name=("Solicitante"), on_delete=models.CASCADE,blank=True,null=True)
+    etapa = models.ForeignKey(Etapa, verbose_name=("Etapa"), on_delete=models.CASCADE ,blank=True,null=True)
     class Meta:
-        verbose_name = ("Solicitud")
-        verbose_name_plural = ("Solicitudes")
+        """Meta definition for Solicitud."""
+
+        verbose_name = 'Solicitud'
+        verbose_name_plural = 'Solicitudes'
 
     def __str__(self):
-        return (self.fechaCreacion)
+        """Unicode representation of Solicitud."""
+        if self.solicitante != None:
+            return '{} {}'.format(self.solicitante,self.fechaCreacion)  
+        else:
+            return '{} {}'.format(DetalleSolicitud.objects.filter(solicitud=self)[0].nombreSolicitante,self.fechaCreacion)  
 
-    def get_absolute_url(self):
-        return reverse("Solicitud_detail", kwargs={"pk": self.pk})
+class DetalleSolicitud(models.Model):
+    """Model definition for DetalleSolicitud."""
+
+    nombreSolicitante = models.CharField(("Solicitante"), max_length=200,blank=True,null=True)
+    duiSolicitante = models.CharField(("DUI"), max_length=10,blank=True,null=True)
+    solicitud = models.OneToOneField(Solicitud, verbose_name=("Solicitud"), on_delete=models.CASCADE)
+    fotoFirma = models.FileField(("firma"), upload_to=None, max_length=250,blank=True,null=True)
+    fotoDocumento = models.FileField(("Documento"), upload_to=None, max_length=250,blank=True,null=True)
+    fechaNacimientoSolicitante = models.DateTimeField(("Nacimiento Solicitante"), auto_now=False, auto_now_add=False,blank=True,null=True)
+    email = models.EmailField(("E-mail"), max_length=254,blank=True,null=True)
+    genero = models.CharField(("Genero"), max_length=1,blank=True,null=True)
+
+
+    class Meta:
+        """Meta definition for DetalleSolicitud."""
+
+        verbose_name = 'DetalleSolicitud'
+        verbose_name_plural = 'DetalleSolicituds'
+
+    def __str__(self):
+        """Unicode representation of DetalleSolicitud."""
+        return '{}'.format(self.solicitud)
+
+class Requerimiento(models.Model):
+    """Model definition for Requerimiento."""
+    
+    detalleSolicitud = models.ForeignKey(DetalleSolicitud, verbose_name=("Detalle de Solicitud"), on_delete=models.CASCADE)
+    peticion = models.TextField(("Peticion"),blank=True,null=True)
+    alcaldia = models.ForeignKey(Alcaldia, verbose_name=("Alcaldia"), on_delete=models.CASCADE,blank=True,null=True)
+
+    class Meta:
+        """Meta definition for Requerimiento."""
+
+        verbose_name = 'Requerimiento'
+        verbose_name_plural = 'Requerimientos'
+
+    def __str__(self):
+        """Unicode representation of Requerimiento."""
+        return '{} {}'.format(self.alcaldia,self.detalleSolicitud)

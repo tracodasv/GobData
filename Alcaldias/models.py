@@ -26,7 +26,7 @@ class Municipio(models.Model):
         verbose_name_plural = 'Municipios'
 
     def __str__(self):
-        return self.nombreMunicipio
+        return '{}'.format(self.nombreMunicipio)
 
 
 class Alcaldia(models.Model):
@@ -41,6 +41,5 @@ class Alcaldia(models.Model):
         verbose_name_plural = 'Alcaldias'
 
     def __str__(self):
-        """Unicode representation of Alcaldia."""
-        return self.municipio
+        return '{} - {}'.format(self.municipio, self.municipio.departamento)
 

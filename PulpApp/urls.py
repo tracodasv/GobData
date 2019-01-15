@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import url
+from Solicitudes.views import home_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r"^usuarios/$", include('usuarios.urls',namespace='usuarios')),
-    url(r"usuarios/",include('Usuarios.urls',namespace="usuarios")),
-    url(r"solicitudes/",include('Solicitudes.urls',namespace='solicitudes') ),
-    url(r"alcaldias/",include('Alcaldias.urls',namespace='alcaldias')),  
+    url("usuarios/",include('Usuarios.urls',namespace="usuarios")),
+    url("solicitudes/",include('Solicitudes.urls',namespace='solicitudes') ),
+    url("alcaldias/",include('Alcaldias.urls',namespace='alcaldias')),
+    path("home/", home_view, name="home"),
 ]

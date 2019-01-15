@@ -42,11 +42,12 @@ class DetalleSolicitud(models.Model):
     """Model definition for DetalleSolicitud."""
 
     nombreSolicitante = models.CharField(("Solicitante"), max_length=200,blank=True,null=True)
-    duiSolicitante = models.CharField(("DUI"), max_length=10,blank=True,null=True)
+    documentoSolicitante = models.CharField(("DUI"), max_length=10,blank=True,null=True)
     solicitud = models.OneToOneField(Solicitud, verbose_name=("Solicitud"), on_delete=models.CASCADE)
-    fotoFirma = models.FileField(("firma"), upload_to=None, max_length=250,blank=True,null=True)
-    fotoDocumento = models.FileField(("Documento"), upload_to=None, max_length=250,blank=True,null=True)
-    fechaNacimientoSolicitante = models.DateTimeField(("Nacimiento Solicitante"), auto_now=False, auto_now_add=False,blank=True,null=True)
+    fotoFirma = models.FileField(("firma"), upload_to='firmas/', max_length=250,blank=True,null=True)
+    documentoAnterior = models.FileField(("Documento(vista Anterior)"), upload_to='documentos/', max_length=250,blank=True,null=True)
+    documentoPosterior = models.FileField(("Documento(vista Posterior)"), upload_to='documentos/', max_length=250,blank=True,null=True)
+    fechaNacimientoSolicitante = models.DateField(("Nacimiento Solicitante"), auto_now=False, auto_now_add=False,blank=True,null=True)
     email = models.EmailField(("E-mail"), max_length=254,blank=True,null=True)
     genero = models.CharField(("Genero"), max_length=1,blank=True,null=True)
 

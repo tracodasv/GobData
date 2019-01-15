@@ -33,3 +33,9 @@ class PersonaForm(forms.ModelForm):
                     'nit':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'number'}),
                     'fechaNacimiento':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'date'}),
                     }
+
+class DocumentosForm(forms.Form):
+
+    firma = forms.ImageField()
+    documentoFotoAnterior = forms.ImageField()
+    documentoFotoPosterior = forms.ImageField()

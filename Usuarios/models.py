@@ -18,9 +18,6 @@ class Pais(models.Model):
         def __str__(self):
             return self.nombrePais
 
-    
-       
-    
 
 class Institucion(models.Model):
         """Model definition for Institucion."""
@@ -35,8 +32,7 @@ class Institucion(models.Model):
 
         def __str__(self):
             return self.nombreInstitucion
-    
-       
+           
 
 class DatosResidencia(models.Model):
     """Model definition for DatosResidencia."""
@@ -55,7 +51,6 @@ class DatosResidencia(models.Model):
         return self.linea1
 
 
-
 class Persona(models.Model):
 
     usuario = models.OneToOneField(User, verbose_name=("Usuario"), on_delete=models.CASCADE)
@@ -66,7 +61,7 @@ class Persona(models.Model):
     segundoApellido = models.CharField(("Segundo Apellido"), max_length=50,null=True,blank=True)
     dui = models.CharField(("DUI"), max_length=10,blank=True,null=True)
     nit = models.CharField(("NIT"), max_length=17,blank=True,null=True)
-    fechaNacimiento = models.DateField(("Nacimiento"), auto_now=False, auto_now_add=False)
+    fechaNacimiento = models.DateField(("Nacimiento"), auto_now=False, auto_now_add=False,blank=True,null=True)
     fechaRegistro = models.DateField(("Registro"), auto_now=False, auto_now_add=True)
     tipoPersona = models.CharField(("Tipo de Persona"),max_length=1,choices=(('N','Natural'),('J','Juridica')),null=True,blank=True)
     genero = models.CharField(("Genero"), max_length=1,choices=(('M','Masculino'),('F','Femenino')),null=True,blank=True)
@@ -75,7 +70,9 @@ class Persona(models.Model):
     nivelEducativo = models.IntegerField(("Nivel Educativo"),null=True,blank=True)
     ocupacion = models.CharField(("Ocupacion"), max_length=100,null=True,blank=True)
     contacto = models.IntegerField(("Contactar a"),null=True,blank=True)
-    firma = models.ImageField(("Firma"), upload_to=None, height_field=None, width_field=None, max_length=None,null=True,blank=True)
+    firma = models.ImageField(("Firma"), upload_to='firmas', height_field=None, width_field=None, max_length=None,null=True,blank=True)
+    documentoFotoAnterior = models.ImageField(("Documento"), upload_to='documentos', height_field=None, width_field=None, max_length=None,null=True,blank=True)
+    documentoFotoPosterior = models.ImageField(("Documento"), upload_to='documentos', height_field=None, width_field=None, max_length=None,null=True,blank=True)
     nacionalidad = models.ForeignKey(Pais, verbose_name=("Nacionalidad"), on_delete=models.CASCADE,null=True,blank=True)
     datosResidencia = models.OneToOneField(DatosResidencia, verbose_name=("Datos de Residencia"), on_delete=models.CASCADE,null=True,blank=True)
     institucion = models.ManyToManyField("Institucion", verbose_name=("Institucion"),blank=True)

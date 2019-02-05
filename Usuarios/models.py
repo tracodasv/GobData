@@ -4,35 +4,35 @@ from django.contrib.auth.models import User
 
 class Pais(models.Model):
         """Model definition for Pais."""
-    
+
         nombrePais = models.CharField(("Pais"), max_length=100)
         codigoPais = models.CharField(("Codigo Pais"), max_length=10,unique=True)
 
 
         class Meta:
             """Meta definition for Pais."""
-    
+
             verbose_name = 'Pais'
             verbose_name_plural = 'Paises'
-        
+
         def __str__(self):
             return self.nombrePais
 
 
 class Institucion(models.Model):
         """Model definition for Institucion."""
-    
+
         nombreInstitucion = models.CharField(("Institucion"), max_length=200)
 
         class Meta:
             """Meta definition for Institucion."""
-    
+
             verbose_name = 'Institucion'
             verbose_name_plural = 'Instituciones'
 
         def __str__(self):
             return self.nombreInstitucion
-           
+
 
 class DatosResidencia(models.Model):
     """Model definition for DatosResidencia."""
@@ -46,13 +46,16 @@ class DatosResidencia(models.Model):
 
         verbose_name = 'DatosResidencia'
         verbose_name_plural = 'DatosResidencias'
-   
+
     def __str__(self):
         return self.linea1
 
+class Rol(models.Model):
+    rol = models.CharField("Rol",max_length=25)
+
 
 class Persona(models.Model):
-
+    rol = models.ForeignKey(Rol,verbose_name="Rol",null=True,blank=True,on_delete=models.CASCADE)
     usuario = models.OneToOneField(User, verbose_name=("Usuario"), on_delete=models.CASCADE)
     nombre_Completo = models.CharField(("Nombre Completo"), max_length=200)
     primerNombre = models.CharField(("Primer Nombre"), max_length=50)

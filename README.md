@@ -1,2 +1,3 @@
 # GobData
 Trash
+-Uso

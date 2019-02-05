@@ -9,6 +9,7 @@ urlpatterns = [
     path(r"login/", login_form, name="login"),
     path(r"signup/", signup_view, name="signup"),
     path(r'logout/',logout_func, name='logout'),
-    path(r"uploadDocs/", upload_Docs, name="Docs")
+    path(r"uploadDocs/", upload_Docs, name="Docs"),
+    
     #url(r"^usuarios/$", include('usuarios.urls',namespace='usuarios')),
 ]

@@ -4,7 +4,6 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         {% block tittle %}
         PulpoApp
@@ -15,12 +14,12 @@
 </head>
 
 <body class="h-100">
-    
-    {% block navbar %}        
+
+    {% block navbar %}
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
         <div class="container">
-            <a class="navbar-brand" href="#">App</a>
+            <a class="navbar-brand" href="{% url 'home' %}">App</a>
             <button type="button" class="navbar-toggler" data-target="#expandedBar" data-toggle="collapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -43,7 +42,7 @@
                     {% if User %}
                         <a class="btn btn-light" href="{% url 'usuarios:logout' %}" role="button">Logout</a>
                     {% else %}
-                        <a class="btn btn-light" href="{% url 'usuarios:login' %}" role="button">Login</a>                            
+                        <a class="btn btn-light" href="{% url 'usuarios:login' %}" role="button">Login</a>
                     {% endif %}
                 </form>
             </div>

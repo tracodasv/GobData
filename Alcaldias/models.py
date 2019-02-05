@@ -1,8 +1,9 @@
 from django.db import models
 
+
 class Departamento(models.Model):
     """Model definition for Departamento."""
-  
+
     nombreDepartamento = models.CharField(("Nombre"), max_length=50)
     class Meta:
         """Meta definition for Departamento."""
@@ -42,4 +43,3 @@ class Alcaldia(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.municipio, self.municipio.departamento)
-

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Alcaldias',
     'Solicitudes',
     'Usuarios',
+    'tags_input',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,11 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 STATIC_ROOT = '' # blank
 
 DEBUG = True
+
+
+TAGS_INPUT_MAPPINGS = { 
+'Alcaldias.Municipio':{
+        'field':'nombreMunicipio'
+    }
+}
+

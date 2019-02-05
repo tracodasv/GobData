@@ -1,5 +1,8 @@
-from django import forms 
+from django import forms
 from .models import Solicitud,DetalleSolicitud,Requerimiento
+from Alcaldias.models import Alcaldia,Municipio
+from tags_input import fields
+
 
 class DetalleSolicitudForm(forms.ModelForm):
     """Form definition for DetalleSolicitud."""
@@ -28,14 +31,17 @@ class DetalleSolicitudForm(forms.ModelForm):
             'documentoSolicitante':forms.TextInput(attrs={'class':'form-control','type':"number"}),
             'fechaNacimientoSolicitante':forms.TextInput(attrs={'class':'form-control','type':"date"}),
             'email':forms.TextInput(attrs={'class':'form-control','type':"email"}),
-            
+
         }
 
 
 
-
-class RequerimientoForm(forms.ModelForm):
-    
-    class Meta:
-        model = "Requerimiento",
-        fields = ("",)
+class MultiRequerimiento(forms.Form):
+    alcaldias = fields.TagsInputField(
+        Municipio.objects.all(),
+        create_missing=False,
+        required = True
+    )
+    peticion = forms.CharField(
+        widget = forms.Textarea(attrs={'class':'form-control','id':'peticion','name':'peticion','rows':'5'})
+    )

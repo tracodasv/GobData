@@ -23,6 +23,6 @@ urlpatterns = [
     url("usuarios/",include('Usuarios.urls',namespace="usuarios")),
     url("solicitudes/",include('Solicitudes.urls',namespace='solicitudes') ),
     url("alcaldias/",include('Alcaldias.urls',namespace='alcaldias')),
-    path("home/", home_view, name="home"),
+    path("", home_view, name="home"),
     url(r'^tags_input/', include('tags_input.urls', namespace='tags_input')),
 ]

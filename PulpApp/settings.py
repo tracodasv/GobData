@@ -137,9 +137,15 @@ STATIC_ROOT = '' # blank
 DEBUG = True
 
 
-TAGS_INPUT_MAPPINGS = { 
+TAGS_INPUT_MAPPINGS = {
 'Alcaldias.Municipio':{
         'field':'nombreMunicipio'
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'robma96@gmail.com'
+EMAIL_HOST_PASSWORD = 'BobMarley'
+EMAIL_PORT = 587

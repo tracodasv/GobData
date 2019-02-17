@@ -17,6 +17,7 @@ from reportlab.rl_config import defaultPageSize
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import A4
 from math import ceil
+from django.core.mail import EmailMessage
 
 def home_view(request):
     return render(request,'home.html')
@@ -28,7 +29,7 @@ def acotarCadenas(texto="""""",maxCararcteres=100,variacion=10):
     limMax = maxCararcteres + variacion
     lineas = 1
     pocisionSalto = 0
-    while limMax < totalCaracteres + maxCararcteres:
+    while limMax < totalCaracteres + maxCararcteres and maxCararcteres>100:
         if totalCaracteres>maxCararcteres:
             textoInicial = texto
             salto = texto[limMin:limMax]
@@ -44,7 +45,7 @@ def acotarCadenas(texto="""""",maxCararcteres=100,variacion=10):
             limMin = limMin + maxCararcteres
             limMax = limMin + variacion
             lineas = lineas + 1
-        resultado = (texto,lineas)
+    resultado = (texto,lineas)
     return resultado
 
 
@@ -59,7 +60,7 @@ def solicitante(request):
 
     return(request)
 
-
+#Creacion de solicitudes simples
 def nuevaSolicitud(request):
     context = {}
     solicitante = None
@@ -104,7 +105,7 @@ def nuevaSolicitud(request):
 
     return render(request,'Solicitudes/index.html',context)
 
-
+#Recoleccion de documentos
 def recoleccion_de_documentos(request,solicitud,detalle):
     context = {}
     detalleActual = DetalleSolicitud.objects.get(pk=detalle)
@@ -129,7 +130,7 @@ def recoleccion_de_documentos(request,solicitud,detalle):
 
     return render(request,'Usuarios/documentos.html',context)
 
-
+#generador de documentos
 def docGen(request,idSolicitud):
     solicitud = Solicitud.objects.get(pk=idSolicitud)
     detalle = DetalleSolicitud.objects.get(solicitud=solicitud)
@@ -170,14 +171,17 @@ def docGen(request,idSolicitud):
         if solicitud.solicitante.firma:
             c.drawImage(solicitud.solicitante.firma.url,30,165,width=200,height=100)
     c.drawString(30,150, detalle.nombreSolicitante)
-    print (lineas)
-
-
-    c.save()
     c.showPage()
 
+    c.save()
     pdf = buffer.getvalue()
     buffer.close()
+
+    email = EmailMessage(subject='Hello', body='Body',to= ['ceduardo.palomo@gmail.com','mauricejacob21@gmail.com'])
+    email.attach('Solicitud.pdf', pdf , 'application/pdf')
+    email.send()
+    print(email)
+
     response.write(pdf)
 
     return response

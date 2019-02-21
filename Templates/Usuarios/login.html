@@ -1,0 +1,38 @@
+{% extends './base.html' %}
+
+
+{% block tittle %}
+    login
+{% endblock %}
+    
+
+
+{% block container %}
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="Username" name="username" />
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" type="password" placeholder="Password" name="password" />
+        </div>
+        {% if error %}
+    
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>{{error}}</strong> Revisa si has escrito correctamente tus credenciales
+        </div>
+    {% endif %}
+
+        <button class="btn btn-success btn-block mt-5" type="submit">Entrar</button>
+        
+        <a class="btn btn-block btn-warning" href="{% url 'usuarios:signup' %}" role="button">Registrate</a>
+        
+       
+    </form>
+
+{% endblock %}
+    

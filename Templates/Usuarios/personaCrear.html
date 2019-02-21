@@ -1,0 +1,61 @@
+{% extends '../base.html' %}
+
+{% block header %}
+<h2>Datos Personales</h2>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 bg-light">
+            <form action="" method="post">
+                {% csrf_token %}
+                <br>
+                <div class="form-group">
+                    <label for="primerNombre">Primer Nombre</label>
+                    {{form.primerNombre}}
+                </div>
+                <div class="form-group">
+                    <label for="segundoNombre">Segundo Nombre</label>
+                    {{form.segundoNombre}}
+                </div>
+                <div class="form-group">
+                    <label for="primerApellido">Primer Apellido</label>
+                    {{form.primerApellido}}
+                </div>
+                <div class="form-group">
+                    <label for="segundoApellido">Segundo Apellido</label>
+                    {{form.segundoApellido}}
+                </div>
+                <div class="form-group">
+                    <label for="dui">DUI</label>
+                    {{form.dui}}
+                </div>
+                <div class="form-group">
+                    <label for="nit">NIT</label>
+                    {{form.nit}}
+                </div>
+                <div class="form-group">
+                        <label for="fechaNacimiento">Fecha Nacimiento</label>
+                        {{form.fechaNacimiento}}
+                </div>
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <button class="btn btn-outline-success" type="submit">Guardar</button>
+                    </div>    
+                </div>
+                <br>
+            </form>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            
+        </div>
+    </div>
+    
+</div>
+     
+{% endblock content %}

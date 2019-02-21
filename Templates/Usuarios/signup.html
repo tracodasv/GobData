@@ -1,0 +1,43 @@
+{% extends './base.html' %}
+{% block ttitle %}
+    Signup
+{% endblock ttitle %}
+
+
+
+{% block container %}
+
+{% if error %}
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>{{error}}</strong>
+    </div>
+{% endif %}
+
+<form action="{% url 'usuarios:Docs' %" method="POST">
+    {% csrf_token %}
+    <div class="form-group ">
+        <h3 class="text-center">Registro</h3>
+        <label for="primerNombre">Primer Nombre</label>
+        <input id="primerNombre" name="primerNombre" class="form-control" type="text" required="True">
+        <label for="segundoNombre">Segundo Nombre</label>
+        <input id="segundoNombre" name="segundoNombre" class="form-control" type="text">
+        <label for="primerApellido">Primer Apellido</label>
+        <input id="primerApellido" name="primerApellido" class="form-control" type="text" required="True">
+        <label for="segundoApellido">Segundo Apellido</label>
+        <input id="segundoApellido" name="segundoApellido" class="form-control" type="text">
+        <label for="documento">Documento No</label>
+        <input id="documento" name="documento" placeholder="999999999" class="form-control" required="True" type="number">
+        <label for="username">E-mail</label>
+        <input id="username" name="username" placeholder="alguien@ejemplo.com" class="form-control" required="True" type="email">
+        <label for="password">Contrasena</label>
+        <input id="password" name="password" required="True" class="form-control" type="password">
+        <label for="passwordcon">Confirma tu Contrasena</label>
+        <input id="passwordcon" name="passwordcon" required="True" class="form-control" type="password">
+
+
+        <button class="btn btn-success btn-block mt-5" type="submit">Registrarme</button>
+
+    </div>
+</form>
+{% endblock container %}

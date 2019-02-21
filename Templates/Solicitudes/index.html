@@ -1,0 +1,58 @@
+ {% extends '../base.html' %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
+                <label for="Solicitante">Solicitante</label>
+                
+                {% if solicitante %}
+                <input id="Solicitante" name="solicitante" class="form-control" type="text" value="{{solicitante}}">
+                {% else %}
+                <input id="Solicitante" name="solicitante" class="form-control" type="text">
+                {% endif %}
+                
+                </div>
+            <hr>
+        </div>
+        <h4>Requerimiento</h4>
+        <div class="row">
+               
+            <div class="form-group col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
+                    <label for="Departamento">Departamento</label>
+                    <select id="Departamento" name="departamento" class="form-control">
+                        <option>San Salvador</option>
+                    </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
+                <label for="Alcaldia">Alcaldia</label>
+                <select id="Alcaldia" name="alcaldia" class="form-control">
+                    <option value="San Salvador">San Salvador</option>
+                    <option value="Tds">Todas</option>
+                </select>
+            </div>
+            </div>
+
+                <br>
+                
+                <div class="row">
+                    
+                    <div class="col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                                <label for="Requerimiento">Que desas conocer?</label>
+                                <textarea id="Requerimiento" name="requisito" class="form-control" rows="5"></textarea>
+                        </div>
+                        <button type="Submit" class="btn col-12 btn-outline-success ">Enviar</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+
+
+{% endblock content %}
+    

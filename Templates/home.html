@@ -1,0 +1,48 @@
+{% extends './base.html' %}
+
+
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="jumbotron">
+        <h1 class="display-4">GobData</h1>
+        <p class="lead">Aplicación para la gestión de solicitudes de acceso a la información pública.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card text-white bg-success mb-6">
+        <div class="card-header">Solicitud simple</div>
+        <div class="card-body">
+        <h5 class="card-title">¿Interesado en datos de una alcaldía?</h5>
+        <p class="card-text">Si te interesan datos de una alcaldía, puedes hacer clic en el botón. Puedes pedir todo lo que imagines.</p>
+        <button type="button" class="btn btn-warning">Success</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card text-white bg-success mb-6">
+        <div class="card-header">Solicitud compuesta</div>
+        <div class="card-body">
+        <h5 class="card-title">¿Querés datos de más de una municipalidad?</h5>
+        <p class="card-text">Si lo que te interesa es enviar una misma solicitud en masa, es decir, a dos o más alcaldías a la vez, haz clic sobre el botón.</p>
+        <button type="button" class="btn btn-warning">Success</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Finaliza cuerpo -->
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>
+
+{% endblock content %}

@@ -1,6 +1,6 @@
 from django.urls import path
 from django.conf.urls import url,include
-from .views import nuevaSolicitud,recoleccion_de_documentos,docGen,solicitudesMasa
+from .views import nuevaSolicitud,recoleccion_de_documentos,docGen,solicitudesMasa,RequerimientoListView
 
 app_name = 'solicitudes'
 urlpatterns = [
@@ -9,5 +9,6 @@ urlpatterns = [
     path('completarInformacionDocs/<int:solicitud>/<int:detalle>',recoleccion_de_documentos,name='docs'),
     path('docSolicitud/<int:idSolicitud>', docGen, name="doc"),
     path("solicitudesMasa/", solicitudesMasa, name="solicitudesMasa"),
+    path("misSolicitudes/",RequerimientoListView.as_view(),name='misSolicitudes')
 ]
  

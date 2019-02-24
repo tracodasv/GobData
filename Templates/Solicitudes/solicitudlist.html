@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    {% if object_list %}
+
+        <table class="table table-bordered table-active">
+        <thead> 
+            <tr>
+                <td>Fecha de Solicitud</td>
+                <td>Peticion</td>
+                <td>Alcaldia</td>
+            </tr>
+	    </thead>
+        <tbody>
+            {% for requerimiento in object_list%}
+                <tr>
+                    <td>{{requerimiento.detalleSolicitud.solicitud.fechaCreacion}}</td>
+                    {% if requerimiento.peticion %}{% else %}{% endif %}
+                    <td>{{requerimiento.peticion}}</td>
+                    <td>{{requerimiento.alcaldia}}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        <p>No hay solicitudes</p>
+    {% endif %}
+
+
+    <div class="pagination align-content-center">
+        <span class="page-links">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+        <span class="page-current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a> 
+            {% endif %}
+        </span>
+    </div>
+        
+
+
+{% endblock content %}
+    

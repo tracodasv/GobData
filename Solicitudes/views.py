@@ -18,6 +18,8 @@ from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import A4
 from math import ceil
 from django.core.mail import EmailMessage
+from django.views.generic import ListView
+
 
 def home_view(request):
     return render(request,'home.html')
@@ -150,6 +152,7 @@ def docGen(request,idSolicitud):
     text.setFont("Helvetica",10)
     lineas = 0
     requerimiento.peticion,lineas = acotarCadenas(requerimiento.peticion)
+    requerimiento.save()
     text.textLines(requerimiento.peticion)
 
     c.setLineWidth(.3)
@@ -208,3 +211,16 @@ def solicitudesMasa(request):
                 requerimiento.save()
             print(data)
     return render(request,'solicitudesMasa.html',context)
+
+
+class RequerimientoListView(ListView):
+    template_name = "Solicitudes/solicitudlist.html"
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Requerimiento.objects.filter(
+            detalleSolicitud__solicitud__solicitante=Persona.objects.get(
+                usuario=self.request.user))
+        return queryset
+    
+

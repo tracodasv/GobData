@@ -42,7 +42,7 @@
                             <a href="#" class="dropdown-item">Informacion</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:datos' %}">Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Usuarios</a></li>
 
                 </ul>
                 <form class="form-inline ml-auto">
@@ -59,54 +59,13 @@
 
     </nav>
     {% endblock %}
- <!--   <div class="container">
-        <div class="alert alert-danger">
-            <p class="text-center">
-                <strong>
-
-                    {% block alerta-Campos1 %}
-                    Recuerda llenar todos los campos marcados con un asterisco
-                    {% endblock %}
-                </strong>
-            </p>
-        </div>
-
-        <div class="alert alert-secondary">
-            <p class="text-center">
-                <strong>
-
-                    {% block alerta-Campos2 %}
-                    Tu solicitud ha sido enviada
-                    {% endblock %}
-                </strong>
-            </p>
-        </div>
-
-        <div class="alert alert-info">
-            <p class="text-center">
-                <strong>
-
-                    {% block alerta-Campos3 %}
-                    Si deseas llevar trazabilidad de tu solicitud registrate
-                    {% endblock %}
-                </strong>
-                <button type="button" class="close">
-                    <span>&times;</span>
-                </button>
-            </p>
-        </div>
-    </div>
--->
-
-
-<!--<div class="progress">
-    <div class="progress-bar bg-primary" style="width: 67%">Loading...</div>
-</div>-->
-
+<div class="container h-100">
     {% block content %}
 
     {% endblock content %}
 
+</div>
+    
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>

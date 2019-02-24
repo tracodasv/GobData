@@ -1,15 +1,24 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.models import User
 from .forms import PersonaForm, DocumentosForm
 from .models import Persona
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, DetailView, ListView
 
 
 
-def datos(request):
-    return HttpResponse("Index")
+class CreatePersona(CreateView):
+    """Crea Persona nueva """
+    template_name = 'Usuarios/personaCrear.html'
+    form_class = 'PersonaForm'
+    success_url = reverse_lazy('usuarios:Docs')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 def PersonaFormulario(request):
     if request.method == 'POST':
@@ -51,12 +60,9 @@ def signup_view(request):
         if password != passwordcon:
             return render(request,"Usuarios/signup.html",{'error':'Contrasenas no coinciden'})
         else:
-            print(username)
-
             usuario = User.objects.create_user(username=username,password=password)
             usuario.save()
-            print(usuario.pk)
-
+            
             persona = Persona.objects.create(
                 primerNombre=primerNombre,
                 segundoNombre=segundoNombre,
@@ -65,11 +71,12 @@ def signup_view(request):
                 dui=documento,
                 usuario=usuario)
 
-            print(persona)
+            
             persona.save()
-            print(persona.pk)
             user = authenticate(request,username=username,password=password)
             login(request,user)
+            return redirect(reverse_lazy('usuarios:Docs'))
+
     return render(request,"Usuarios/signup.html")
 
 
@@ -78,6 +85,7 @@ def logout_func(request):
     return redirect('usuarios:login')
 
 def upload_Docs(request):
+
     context= {}
     if request.method == 'POST':
         form = DocumentosForm(request.POST,request.FILES)

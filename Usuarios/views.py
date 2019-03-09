@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from .forms import PersonaForm, DocumentosForm
 from .models import Persona
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView,RedirectView
 
 
 
@@ -110,3 +110,18 @@ def upload_Docs(request):
             print (form.cleaned_data)
             return redirect('solicitudes:nuevaSolicitud')
     return render(request,'./Usuarios/documentos.html',context)
+
+
+class PersonaUpdateView(UpdateView):
+    model = Persona
+    form_class =  PersonaForm
+    template_name = "Usuarios/perfil.html"
+    success_url=reverse_lazy('usuarios:uperfil')
+
+
+class RedirectPerfil(RedirectView):
+    def get_redirect_url(self):
+        persona = Persona.objects.get(usuario=self.request.user)
+        print(persona.pk)
+        return reverse_lazy('usuarios:perfil',
+                            kwargs={'pk': persona.pk})

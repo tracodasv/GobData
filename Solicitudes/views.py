@@ -50,6 +50,58 @@ def acotarCadenas(texto="""""",maxCararcteres=100,variacion=10):
     resultado = (texto,lineas)
     return resultado
 
+def generadorDePDF(idSolicitud,idRequerimiento):
+    solicitud = Solicitud.objects.get(pk=idSolicitud)
+    detalle = DetalleSolicitud.objects.get(solicitud=solicitud)
+    requerimiento = Requerimiento.objects.get(detalleSolicitud=detalle,pk=idRequerimiento)
+    introduccionln1 = 'En el ejercicio del derecho que me es reconocido en el artículo dos de la Ley de Acceso a la'
+    introduccionln2 = 'Información Pública y que deriva del artículo seis de la Constitución de la República, a bien tengo'
+    introduccionln3 = 'requerir lo siguiente:'
+    response = HttpResponse(content_type='application/pdf')
+    #response['Content-Disposition'] = 'attachment;filename={}{}.pdf'.format(detalle.nombreSolicitante,datetime.datetime.now())
+
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer,pagesize=A4)
+    nCaracteres = len(requerimiento.peticion)
+    print (nCaracteres)
+    w,h = A4
+    text = c.beginText(50,670)
+    text.setFont("Helvetica",10)
+    lineas = 0
+    requerimiento.peticion,lineas = acotarCadenas(requerimiento.peticion)
+    requerimiento.save()
+    text.textLines(requerimiento.peticion)
+
+    c.setLineWidth(.3)
+    c.setFont('Helvetica',13)
+    c.drawString(480,750,datetime.datetime.now().strftime('%d/%m/%y'))
+    c.line(460,747,560,747)
+    c.drawString(30,735,'Oficial de Informacion')
+    c.setFont('Helvetica',10)
+    c.drawString(50,720,introduccionln1)
+    c.drawString(50,705,introduccionln2)
+    c.drawString(50,690,introduccionln3)
+
+    c.drawText(text)
+
+    if detalle.fotoFirma:
+        c.drawImage(detalle.fotoFirma.url,30,165,width=100,height=100)
+
+    if solicitud.solicitante:
+        if solicitud.solicitante.firma:
+            c.drawImage(solicitud.solicitante.firma.url,30,165,width=200,height=100)
+    c.drawString(30,150, detalle.nombreSolicitante)
+    c.showPage()
+
+    c.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+
+    
+
+    response.write(pdf)
+
+    return pdf
 
 def solicitante(request):
     if request.method == 'POST':
@@ -98,7 +150,7 @@ def nuevaSolicitud(request):
         requerimiento.save()
         if solicitante:
             if solicitante.firma:
-                return redirect('solicitudes:doc',solicitud.pk)
+                return redirect('solicitudes:doc',solicitud=solicitud.pk)
             else:
                 return redirect('solicitudes:docs',solicitud=solicitud.pk,detalle=detalle.pk)
         else:
@@ -190,6 +242,7 @@ def docGen(request,idSolicitud):
     return response
 
 
+
 def solicitudesMasa(request):
 
     form = MultiRequerimiento(request.POST)
@@ -197,18 +250,34 @@ def solicitudesMasa(request):
     lista = {'lista':Municipio.objects.all()}
     context.update(lista)
     context.update({'form':form})
-
+     
     if request.method == 'POST':
         if form.is_valid():
-            solicitud = Solicitud()
+            solicitante = Persona.objects.get(usuario=request.user)
+            nombre = solicitante.primerNombre + " " + solicitante.segundoNombre + solicitante.primerApellido + " " + solicitante.segundoApellido
+            solicitud = Solicitud(solicitante=solicitante)
             solicitud.save()
-            detalle = DetalleSolicitud(solicitud=solicitud)
+            detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=nombre)
             detalle.save()
+
+            print(detalle.pk)
             data = form.cleaned_data
             municipios = data['alcaldias']
+
             for municipio in municipios:
+                
                 requerimiento = Requerimiento(detalleSolicitud=detalle,peticion=data['peticion'],alcaldia=Alcaldia.objects.get(municipio=municipio))
                 requerimiento.save()
+
+                pk = solicitud.pk
+
+                pdf = generadorDePDF(pk,requerimiento.pk)
+
+                email = EmailMessage(subject='Hello', body='Body',to= [requerimiento.alcaldia.oficial])
+                email.attach('Solicitud.pdf', pdf , 'application/pdf')
+                email.send()
+                print(email)
+
             print(data)
     return render(request,'solicitudesMasa.html',context)
 

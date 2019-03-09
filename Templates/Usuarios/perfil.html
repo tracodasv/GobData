@@ -1,0 +1,11 @@
+{% extends 'Usuarios/base.html' %}
+
+
+{% block container %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-outline-success">Actualizar Informacion</button>
+    </form>
+{% endblock container %}
+    

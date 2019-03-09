@@ -13,6 +13,9 @@ class PersonaForm(forms.ModelForm):
                     'dui',
                     'fechaNacimiento',
                     'nit',
+                    'genero',
+                    'telefonoCasa',
+                    'celular',
                     ]
         labels = {
                     'primerNombre':'Primer Nombre',
@@ -22,6 +25,9 @@ class PersonaForm(forms.ModelForm):
                     'dui':'DUI',
                     'fechaNacimiento':'Fecha De Nacimiento',
                     'nit':'NIT',
+                    'genero':'Genero segun DUI:',
+                    'telefonoCasa':"Telefono de Casa",
+                    'celular':'Telefono Celular',
                     }
 
         widgets = {
@@ -32,6 +38,9 @@ class PersonaForm(forms.ModelForm):
                     'dui':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'number'}),
                     'nit':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'number'}),
                     'fechaNacimiento':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'date'}),
+                    
+                    'telefonoCasa':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'number'}),
+                    'celular':forms.TextInput(attrs={'class':'form-control col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12','type':'number'}),
                     }
 
 class DocumentosForm(forms.Form):

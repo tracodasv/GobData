@@ -1,5 +1,6 @@
 import os
 from django.shortcuts import render,redirect
+from django.urls import reverse_lazy    
 from django.http import HttpResponse
 from .models import Solicitud,DetalleSolicitud,Requerimiento
 from Usuarios.models import Persona
@@ -19,7 +20,7 @@ from reportlab.lib.pagesizes import A4
 from math import ceil
 from django.core.mail import EmailMessage
 from django.views.generic import ListView
-
+from django.http import HttpResponseRedirect
 
 def home_view(request):
     return render(request,'home.html')
@@ -135,7 +136,6 @@ def nuevaSolicitud(request):
     if request.method == 'POST':
         requisito = request.POST['requisito']
         alcaldia = request.POST['alcaldia']
-        requerimiento = Requerimiento(peticion=requisito,alcaldia=Alcaldia.objects.get(municipio=Municipio.objects.get(nombreMunicipio=alcaldia)))
         if solicitante:
             solicitud = Solicitud(solicitante = solicitante)
         else:
@@ -146,11 +146,12 @@ def nuevaSolicitud(request):
         detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=noAuth)
         detalle.save()
         print(request.POST)
+        requerimiento = Requerimiento(peticion=requisito,alcaldia=Alcaldia.objects.get(municipio=Municipio.objects.get(nombreMunicipio=alcaldia)))
         requerimiento.detalleSolicitud = detalle
         requerimiento.save()
         if solicitante:
             if solicitante.firma:
-                return redirect('solicitudes:doc',solicitud=solicitud.pk)
+                return HttpResponseRedirect(reverse_lazy('solicitudes:doc',args=[solicitud.pk]))
             else:
                 return redirect('solicitudes:docs',solicitud=solicitud.pk,detalle=detalle.pk)
         else:
@@ -232,7 +233,7 @@ def docGen(request,idSolicitud):
     pdf = buffer.getvalue()
     buffer.close()
 
-    email = EmailMessage(subject='Hello', body='Body',to= ['ceduardo.palomo@gmail.com','mauricejacob21@gmail.com'])
+    email = EmailMessage(subject='Hello', body='Body',to=[requerimiento.alcaldia.oficial] )
     email.attach('Solicitud.pdf', pdf , 'application/pdf')
     email.send()
     print(email)
@@ -265,19 +266,19 @@ def solicitudesMasa(request):
             municipios = data['alcaldias']
 
             for municipio in municipios:
-                
                 requerimiento = Requerimiento(detalleSolicitud=detalle,peticion=data['peticion'],alcaldia=Alcaldia.objects.get(municipio=municipio))
                 requerimiento.save()
 
                 pk = solicitud.pk
 
                 pdf = generadorDePDF(pk,requerimiento.pk)
+                print(pk)
 
                 email = EmailMessage(subject='Hello', body='Body',to= [requerimiento.alcaldia.oficial])
                 email.attach('Solicitud.pdf', pdf , 'application/pdf')
                 email.send()
-                print(email)
 
+                print(email)
             print(data)
     return render(request,'solicitudesMasa.html',context)
 

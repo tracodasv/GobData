@@ -10,19 +10,29 @@
         {% endblock tittle %}
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap.min.css' %}" />
-
-    <script src="{% static 'bootstrap-tagsinput.js' %}" charset="utf-8"></script>
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'bootstrap-tagsinput.css' %}" type="text/css">
+    <script src="{% static 'bootstrap-tagsinput.js' %}" charset="utf-8"></script> -->
+    <link rel="stylesheet" href="{% static 'css/gd.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+    
+
 </head>
 
 <body class="h-100">
 
     {% block navbar %}
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-
+    <nav class="navbar navbar-expand-md navbar-dark bg-blue-o">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">App</a>
+            <a class="navbar-brand" href="{% url 'home' %}">GobData</a>
             <button type="button" class="navbar-toggler" data-target="#expandedBar" data-toggle="collapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -49,7 +59,7 @@
                     <input type="text" class="form-control" placeholder="Noticias">
                     <button type="submit" class="btn btn-outline-light">Search</button>
                     {% if request.user %}
-                        <a class="btn btn-light" href="{% url 'usuarios:login' %}" role="button">Login</a>
+                        <a class="btn btn-light bg-green" href="{% url 'usuarios:login' %}" role="button">Login</a>
                     {% else %}
                         <a class="btn btn-light" href="{% url 'usuarios:logout' %}" role="button">Logout</a>
                     {% endif %}
@@ -66,8 +76,6 @@
 
 </div>
     
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Alcaldias',
     'Solicitudes',
     'Usuarios',
+    'bootstrap4',
     'tags_input',
 ]
 

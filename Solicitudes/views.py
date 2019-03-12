@@ -251,8 +251,9 @@ def solicitudesMasa(request):
     lista = {'lista':Municipio.objects.all()}
     context.update(lista)
     context.update({'form':form})
-     
+    
     if request.method == 'POST':
+
         if form.is_valid():
             solicitante = Persona.objects.get(usuario=request.user)
             nombre = solicitante.primerNombre + " " + solicitante.segundoNombre + solicitante.primerApellido + " " + solicitante.segundoApellido
@@ -261,25 +262,33 @@ def solicitudesMasa(request):
             detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=nombre)
             detalle.save()
 
-            print(detalle.pk)
             data = form.cleaned_data
             municipios = data['alcaldias']
+            municipios=municipios.split(",")
+            correos = []
+            requerimiento = ''
 
             for municipio in municipios:
-                requerimiento = Requerimiento(detalleSolicitud=detalle,peticion=data['peticion'],alcaldia=Alcaldia.objects.get(municipio=municipio))
+                municipalidad = Municipio.objects.get(nombreMunicipio=municipio)
+                alcaldia = Alcaldia.objects.get(municipio=municipalidad)
+                requerimiento = Requerimiento(detalleSolicitud=detalle,peticion=data['peticion'],alcaldia=alcaldia)
                 requerimiento.save()
+                correos.append(alcaldia.oficial)
 
-                pk = solicitud.pk
+                
 
-                pdf = generadorDePDF(pk,requerimiento.pk)
-                print(pk)
+            pk=solicitud.pk
 
-                email = EmailMessage(subject='Hello', body='Body',to= [requerimiento.alcaldia.oficial])
-                email.attach('Solicitud.pdf', pdf , 'application/pdf')
-                email.send()
+            pdf = generadorDePDF(pk,requerimiento.pk)
 
-                print(email)
-            print(data)
+            email = EmailMessage(subject='Solicitud de Informacion', body='Adjunto PDF de peticion de informacion',bcc=correos)
+            email.attach('Solicitud.pdf', pdf , 'application/pdf')
+
+            email.send()
+
+            print(email.recipients())
+            print("Se ha enviado correo")
+
     return render(request,'solicitudesMasa.html',context)
 
 

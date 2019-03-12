@@ -37,11 +37,9 @@ class DetalleSolicitudForm(forms.ModelForm):
 
 
 class MultiRequerimiento(forms.Form):
-    alcaldias = fields.TagsInputField(
-        Municipio.objects.all(),
-        create_missing=False,
+    alcaldias = forms.CharField(
         required = True,
-        widget = forms.TextInput(attrs={'class':'form-control','value':'','type':'text','data-role':'tagsinput','placeholder':'Ingrese las alcaldias'}) 
+        widget = forms.TextInput(attrs={'class':'form-control','name':'alcaldias','value':'','type':'text','data-role':'tagsinput','placeholder':'Ingrese las alcaldias'}) 
     )
     peticion = forms.CharField(
         widget = forms.Textarea(attrs={'class':'form-control','id':'peticion','name':'peticion','rows':'5'})

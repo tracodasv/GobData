@@ -26,30 +26,52 @@ def home_view(request):
     return render(request,'home.html')
 
 #Regresa una tupla con el texto nuevo y el numero de lineas
-def acotarCadenas(texto="""""",maxCararcteres=100,variacion=10):
-    totalCaracteres = len(texto)
-    limMin = maxCararcteres - variacion
-    limMax = maxCararcteres + variacion
-    lineas = 1
-    pocisionSalto = 0
-    while limMax < totalCaracteres + maxCararcteres and maxCararcteres>100:
-        if totalCaracteres>maxCararcteres:
-            textoInicial = texto
-            salto = texto[limMin:limMax]
-            pocisionSalto = int(salto.find(' '))
-            while pocisionSalto == -1:
-                limMin = limMin - 5
-                salto = texto[limMin:limMax]
-                pocisionSalto = int(salto.find(' '))
-                print(pocisionSalto)
-            pocisionSalto = pocisionSalto + int(limMin)
-            texto = texto[:pocisionSalto]+'''
-            '''+texto[pocisionSalto+1:]
-            limMin = limMin + maxCararcteres
-            limMax = limMin + variacion
-            lineas = lineas + 1
-    resultado = (texto,lineas)
-    return resultado
+def acotarCadenas(texto="""""",caracteresPorLinea=100,variacion=5):
+    limMax=caracteresPorLinea
+    posicionSalto = 0
+    inicioLinea = 0
+    limMin = caracteresPorLinea-variacion
+    bandera = 0
+    nuevo_texto=""""""
+    lineas=1
+    if len(texto)>caracteresPorLinea:
+        while bandera == 0:
+            saltoLinea = texto[limMin:limMax]
+            linea = texto[inicioLinea:limMax]
+            if "\n" in linea:
+                posicionSalto = linea.index("\n")+inicioLinea
+                inicioLinea = posicionSalto + 1
+                limMax = inicioLinea + caracteresPorLinea
+                limMin = inicioLinea + caracteresPorLinea - variacion
+                nuevo_texto=texto
+                lineas += 1
+
+            elif " " in saltoLinea :
+                posicionSalto = saltoLinea.index(" ") + limMin
+                texto = texto[:posicionSalto]+"\n"+texto[posicionSalto:]
+                inicioLinea = posicionSalto+1
+                limMax = inicioLinea + caracteresPorLinea
+                limMin = inicioLinea + caracteresPorLinea - variacion
+                nuevo_texto=texto
+                lineas += 1
+
+            elif " " not in saltoLinea:
+                while saltoLinea.find(" ") == -1:
+                     limMin = limMin-variacion
+                     saltoLinea = texto[limMin:limMax]
+                posicionSalto = saltoLinea.index(" ") + limMin
+                texto = texto[:posicionSalto]+"\n"+texto[posicionSalto:]
+                inicioLinea = posicionSalto+1
+                limMax = inicioLinea + caracteresPorLinea
+                limMin = inicioLinea + caracteresPorLinea - variacion
+                nuevo_texto=texto
+                lineas += 1
+
+            if limMax >= len(texto): 
+                bandera = 1
+                return(nuevo_texto,lineas)    
+        return(nuevo_texto,lineas)    
+    return(texto,lineas)
 
 def generadorDePDF(idSolicitud,idRequerimiento):
     solicitud = Solicitud.objects.get(pk=idSolicitud)
@@ -71,7 +93,8 @@ def generadorDePDF(idSolicitud,idRequerimiento):
     lineas = 0
     requerimiento.peticion,lineas = acotarCadenas(requerimiento.peticion)
     requerimiento.save()
-    text.textLines(requerimiento.peticion)
+    text.textLines(requerimiento.peticion+"\n\n"+ '''Respecto de la modalidad de entrega, solicito todo en formato digital y/o electrónico.
+    Señalo como medio para recibir notificaciones, así como lo solicitado, el correo electrónico <Aqui Correo>''')
 
     c.setLineWidth(.3)
     c.setFont('Helvetica',13)
@@ -146,9 +169,10 @@ def nuevaSolicitud(request):
         detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=noAuth)
         detalle.save()
         print(request.POST)
-        requerimiento = Requerimiento(peticion=requisito,alcaldia=Alcaldia.objects.get(municipio=Municipio.objects.get(nombreMunicipio=alcaldia)))
+        requerimiento = Requerimiento(peticion=requisito,alcaldia=Alcaldia.objects.get(municipio=Municipio.objects.get(nombreMunicipio=alcaldia)),resume=requisito[:50])
         requerimiento.detalleSolicitud = detalle
         requerimiento.save()
+        print(requerimiento.peticion)
         if solicitante:
             if solicitante.firma:
                 return HttpResponseRedirect(reverse_lazy('solicitudes:doc',args=[solicitud.pk]))
@@ -189,16 +213,18 @@ def recoleccion_de_documentos(request,solicitud,detalle):
 def docGen(request,idSolicitud):
     solicitud = Solicitud.objects.get(pk=idSolicitud)
     detalle = DetalleSolicitud.objects.get(solicitud=solicitud)
-    requerimiento = Requerimiento.objects.get(detalleSolicitud=detalle)
+    requerimiento = Requerimiento.objects.filter(detalleSolicitud=detalle)
+
     introduccionln1 = 'En el ejercicio del derecho que me es reconocido en el artículo dos de la Ley de Acceso a la'
     introduccionln2 = 'Información Pública y que deriva del artículo seis de la Constitución de la República, a bien tengo'
     introduccionln3 = 'requerir lo siguiente:'
     response = HttpResponse(content_type='application/pdf')
+    requerimiento = requerimiento[0]
     #response['Content-Disposition'] = 'attachment;filename={}{}.pdf'.format(detalle.nombreSolicitante,datetime.datetime.now())
 
     buffer = BytesIO()
     c = canvas.Canvas(buffer,pagesize=A4)
-    nCaracteres = len(requerimiento.peticion)
+    nCaracteres = len(requerimiento.peticion )
     print (nCaracteres)
     w,h = A4
     text = c.beginText(50,670)
@@ -206,7 +232,8 @@ def docGen(request,idSolicitud):
     lineas = 0
     requerimiento.peticion,lineas = acotarCadenas(requerimiento.peticion)
     requerimiento.save()
-    text.textLines(requerimiento.peticion)
+    text.textLines(requerimiento.peticion+"\n\n"+ '''Respecto de la modalidad de entrega, solicito todo en formato digital y/o electrónico.
+    Señalo como medio para recibir notificaciones, así como lo solicitado, el correo electrónico <Aqui Correo>''')
 
     c.setLineWidth(.3)
     c.setFont('Helvetica',13)
@@ -235,7 +262,7 @@ def docGen(request,idSolicitud):
 
     email = EmailMessage(subject='Hello', body='Body',to=[requerimiento.alcaldia.oficial] )
     email.attach('Solicitud.pdf', pdf , 'application/pdf')
-    email.send()
+    #email.send()
     print(email)
 
     response.write(pdf)
@@ -271,7 +298,10 @@ def solicitudesMasa(request):
             for municipio in municipios:
                 municipalidad = Municipio.objects.get(nombreMunicipio=municipio)
                 alcaldia = Alcaldia.objects.get(municipio=municipalidad)
-                requerimiento = Requerimiento(detalleSolicitud=detalle,peticion=data['peticion'],alcaldia=alcaldia)
+                requerimiento = Requerimiento(detalleSolicitud=detalle,
+                    peticion=data['peticion'],
+                    alcaldia=alcaldia,
+                    resume=data['peticion'][:50])
                 requerimiento.save()
                 correos.append(alcaldia.oficial)
 
@@ -281,7 +311,10 @@ def solicitudesMasa(request):
 
             pdf = generadorDePDF(pk,requerimiento.pk)
 
-            email = EmailMessage(subject='Solicitud de Informacion', body='Adjunto PDF de peticion de informacion',bcc=correos)
+            email = EmailMessage(subject='Solicitud de Informacion', 
+                                body='''Oficial de informacion: en uso de las facultades legales, le pido que atienda la solicitud. Correo generado con GOBDATA. 
+                                        Adjunto PDF de peticion de informacion''',
+                                bcc=correos)
             email.attach('Solicitud.pdf', pdf , 'application/pdf')
 
             email.send()

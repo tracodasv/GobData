@@ -24,7 +24,6 @@ class Solicitud(models.Model):
 
     fechaCreacion = models.DateTimeField(("Fecha de Creacion"), auto_now=False, auto_now_add=True)
     solicitante = models.ForeignKey(Persona, verbose_name=("Solicitante"), on_delete=models.CASCADE,blank=True,null=True)
-    etapa = models.ForeignKey(Etapa, verbose_name=("Etapa"), on_delete=models.CASCADE ,blank=True,null=True)
     class Meta:
         """Meta definition for Solicitud."""
 
@@ -64,10 +63,12 @@ class DetalleSolicitud(models.Model):
 
 class Requerimiento(models.Model):
     """Model definition for Requerimiento."""
-    
+
+    etapa = models.ForeignKey(Etapa, verbose_name=("Etapa"), on_delete=models.CASCADE ,blank=True,null=True)
     detalleSolicitud = models.ForeignKey(DetalleSolicitud, verbose_name=("Detalle de Solicitud"), on_delete=models.CASCADE)
     peticion = models.TextField(("Peticion"),blank=True,null=True)
     alcaldia = models.ForeignKey(Alcaldia, verbose_name=("Alcaldia"), on_delete=models.CASCADE,blank=True,null=True)
+    resume = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         """Meta definition for Requerimiento."""

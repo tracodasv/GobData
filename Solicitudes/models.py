@@ -24,6 +24,8 @@ class Solicitud(models.Model):
 
     fechaCreacion = models.DateTimeField(("Fecha de Creacion"), auto_now=False, auto_now_add=True)
     solicitante = models.ForeignKey(Persona, verbose_name=("Solicitante"), on_delete=models.CASCADE,blank=True,null=True)
+    fechaRespuesta = models.DateField(("Fecha de Respuesta"), auto_now=False, auto_now_add=False,blank=True,null=True)
+
     class Meta:
         """Meta definition for Solicitud."""
 

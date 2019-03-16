@@ -7,13 +7,20 @@
         {% csrf_token %}
         <div class="row">
             <div class="form-group col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
-                <label for="Solicitante">Solicitante</label>
-                
+                              
                 {% if solicitante %}
-                <input id="Solicitante" name="solicitante" class="form-control" type="text" value="{{solicitante}}">
+                <label for="Solicitante">Solicitante</label>
+                <input id="Solicitante" name="solicitante" class="form-control" type="text" value="{{solicitante}}" readonly>
+                <label for="correo">Correo Electronico</label>
+                <input type="email" name="correo" class="form-control" value="{{request.user}}" readonly>
                 {% else %}
+                <label for="Solicitante">Solicitante</label>
                 <input id="Solicitante" name="solicitante" class="form-control" type="text">
+                <label for="correo">Correo Electronico</label>
+                <input type="email" name="correo" class="form-control" value="">
+
                 {% endif %}
+
                 
                 </div>
             <hr>

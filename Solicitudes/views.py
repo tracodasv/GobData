@@ -1,4 +1,6 @@
 import os
+from datetime import datetime, date, time, timedelta
+import calendar
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy    
 from django.http import HttpResponse
@@ -165,8 +167,11 @@ def nuevaSolicitud(request):
             solicitud = Solicitud()
 
         solicitud.save()
+        solicitud.fechaRespuesta = solicitud.fechaCreacion + timedelta(days=10)
+        solicitud.save()
         noAuth = request.POST['solicitante']
-        detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=noAuth)
+        correo = request.POST['email']
+        detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=noAuth,email=correo)
         detalle.save()
         print(request.POST)
         requerimiento = Requerimiento(peticion=requisito,alcaldia=Alcaldia.objects.get(municipio=Municipio.objects.get(nombreMunicipio=alcaldia)),resume=requisito[:50])
@@ -285,6 +290,8 @@ def solicitudesMasa(request):
             solicitante = Persona.objects.get(usuario=request.user)
             nombre = solicitante.primerNombre + " " + solicitante.segundoNombre + solicitante.primerApellido + " " + solicitante.segundoApellido
             solicitud = Solicitud(solicitante=solicitante)
+            solicitud.save()
+            solicitud.fechaRespuesta = solicitud.fechaCreacion + timedelta(days=10)
             solicitud.save()
             detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=nombre)
             detalle.save()

@@ -95,8 +95,9 @@ def generadorDePDF(idSolicitud,idRequerimiento):
     lineas = 0
     requerimiento.peticion,lineas = acotarCadenas(requerimiento.peticion)
     requerimiento.save()
-    text.textLines(requerimiento.peticion+"\n\n"+ '''Respecto de la modalidad de entrega, solicito todo en formato digital y/o electrónico.
-    Señalo como medio para recibir notificaciones, así como lo solicitado, el correo electrónico <Aqui Correo>''')
+
+    text.textLines(requerimiento.peticion+"\n\n"+ f'''Respecto de la modalidad de entrega, solicito todo en formato digital y/o electrónico.
+    Señalo como medio para recibir notificaciones, así como lo solicitado, el correo electrónico {detalle.email}''')
 
     c.setLineWidth(.3)
     c.setFont('Helvetica',13)
@@ -237,8 +238,8 @@ def docGen(request,idSolicitud):
     lineas = 0
     requerimiento.peticion,lineas = acotarCadenas(requerimiento.peticion)
     requerimiento.save()
-    text.textLines(requerimiento.peticion+"\n\n"+ '''Respecto de la modalidad de entrega, solicito todo en formato digital y/o electrónico.
-    Señalo como medio para recibir notificaciones, así como lo solicitado, el correo electrónico <Aqui Correo>''')
+    text.textLines(requerimiento.peticion+"\n\n"+  f'''Respecto de la modalidad de entrega, solicito todo en formato digital y/o electrónico.
+    Señalo como medio para recibir notificaciones, así como lo solicitado, el correo electrónico {detalle.email}''')
 
     c.setLineWidth(.3)
     c.setFont('Helvetica',13)
@@ -267,13 +268,14 @@ def docGen(request,idSolicitud):
 
     email = EmailMessage(subject='Hello', body='Body',to=[requerimiento.alcaldia.oficial] )
     email.attach('Solicitud.pdf', pdf , 'application/pdf')
+    email.attach('Solicitud.pdf', generador_pdf_DUI(solicitud.pk) , 'application/pdf')
+
     #email.send()
     print(email)
 
     response.write(pdf)
 
     return response
-
 
 
 def solicitudesMasa(request):
@@ -288,12 +290,12 @@ def solicitudesMasa(request):
 
         if form.is_valid():
             solicitante = Persona.objects.get(usuario=request.user)
-            nombre = solicitante.primerNombre + " " + solicitante.segundoNombre + solicitante.primerApellido + " " + solicitante.segundoApellido
+            nombre = solicitante.primerNombre + " " + solicitante.segundoNombre +" "+ solicitante.primerApellido + " " + solicitante.segundoApellido
             solicitud = Solicitud(solicitante=solicitante)
             solicitud.save()
             solicitud.fechaRespuesta = solicitud.fechaCreacion + timedelta(days=10)
             solicitud.save()
-            detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=nombre)
+            detalle = DetalleSolicitud(solicitud=solicitud,nombreSolicitante=nombre,email=request.user.username)
             detalle.save()
 
             data = form.cleaned_data
@@ -323,6 +325,7 @@ def solicitudesMasa(request):
                                         Adjunto PDF de peticion de informacion''',
                                 bcc=correos)
             email.attach('Solicitud.pdf', pdf , 'application/pdf')
+            email.attach('Solicitud.pdf', generador_pdf_DUI(solicitud.pk) , 'application/pdf')
 
             email.send()
 
@@ -343,3 +346,29 @@ class RequerimientoListView(ListView):
         return queryset
     
 
+def generador_pdf_DUI(idSolicitud):
+    solicitud = Solicitud.objects.get(pk=idSolicitud)
+    detalle = DetalleSolicitud.objects.get(solicitud=solicitud)
+    requerimiento = Requerimiento.objects.filter(detalleSolicitud=detalle)[0]
+
+    response = HttpResponse(content_type='application/pdf')
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer,pagesize=A4)
+
+    if detalle.documentoAnterior:
+        c.drawImage(detalle.documentoAnterior.url,100,500,width=400,height=250)
+        c.drawImage(detalle.documentoPosterior.url,100,175,width=400,height=250)
+
+    if solicitud.solicitante:
+        if solicitud.solicitante.documentoFotoAnterior:
+            c.drawImage(solicitud.solicitante.documentoFotoAnterior.url,100,500,width=400,height=250)
+            c.drawImage(solicitud.solicitante.documentoFotoPosterior.url,100,175,width=400,height=250)
+
+    c.showPage()
+
+    c.save()
+
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return(pdf)

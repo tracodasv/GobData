@@ -10,6 +10,8 @@
                 <td>Fecha de Solicitud</td>
                 <td>Peticion</td>
                 <td>Alcaldia</td>
+                <td>Fecha Propuesta de Respuesta</td>
+                <td>Ver Documento</td>
             </tr>
 	    </thead>
         <tbody>
@@ -19,7 +21,8 @@
                     {% if requerimiento.peticion %}{% else %}{% endif %}
                     <td>{{requerimiento.peticion}}</td>
                     <td>{{requerimiento.alcaldia}}</td>
-                    <td></td>
+                    <td>{{requerimiento.detalleSolicitud.solicitud.fechaRespuesta}}</td>
+                    <td><a href="{% url 'solicitudes:doc' idSolicitud=requerimiento.detalleSolicitud.solicitud.pk %}">Ver</a></td>
                 </tr>
             {% endfor %}
         </tbody>

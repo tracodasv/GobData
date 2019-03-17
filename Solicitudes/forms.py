@@ -32,7 +32,7 @@ class DetalleSolicitudForm(forms.ModelForm):
             'fechaNacimientoSolicitante':forms.TextInput(attrs={'class':'form-control','type':"date"}),
             'email':forms.TextInput(attrs={'class':'form-control','type':"email"}),
 
-        }
+        } 
 
 
 

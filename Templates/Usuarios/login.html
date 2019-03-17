@@ -5,19 +5,22 @@
     login
 {% endblock %}
     
-
-
-{% block container %}
+{% block content %}
 <section>
-    <form method="POST" action="">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-4">
+<form method="POST" action="">
         {% csrf_token %}
 
         <div class="form-group">
-            <input class="form-control" type="text" placeholder="Username" name="username" />
+            <label>Usuario:</label>
+            <input class="form-control" type="text" placeholder="alguien@ejemplo.com" name="username" />
         </div>
 
         <div class="form-group">
-            <input class="form-control" type="password" placeholder="Password" name="password" />
+            <label >Contraseña:</label>
+            <input class="form-control" type="password" placeholder="Ingrese su contraseña" name="password" />
         </div>
         {% if error %}
     
@@ -26,13 +29,16 @@
             <strong>{{error}}</strong> Revisa si has escrito correctamente tus credenciales
         </div>
     {% endif %}
-
-        <button class="btn btn-success btn-block mt-5 btn-primary" type="submit">Entrar</button>
-        <a class="btn btn-block btn-warning" href="{% url 'usuarios:signup' %}" role="button">Registrate</a>
-        
-       
+<div class="form-group text-center">
+            <button class="btn btn-block mt-5 btn-primary" type="submit">Entrar</button>
+        <a class="btn btn-block btn-success" href="{% url 'usuarios:signup' %}" role="button">Registrate</a>   
+                </div>
     </form>
+    
+        </div>
+    </div>
+</div>
 </section>
 
-{% endblock %}
+{% endblock content %}
     

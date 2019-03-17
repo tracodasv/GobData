@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import url
 from Solicitudes.views import home_view
+from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r"^usuarios/$", include('usuarios.urls',namespace='usuarios')),
@@ -25,4 +26,5 @@ urlpatterns = [
     url("alcaldias/",include('Alcaldias.urls',namespace='alcaldias')),
     path("", home_view, name="home"),
     url(r'^tags_input/', include('tags_input.urls', namespace='tags_input')),
+    path("creditos/", TemplateView.as_view(template_name='creditos.html'), name="creditos"),
 ]

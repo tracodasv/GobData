@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 
 
 
@@ -9,7 +9,7 @@
       <img class="img-fluid mb-5 d-block mx-auto" src="static/img/profile.png" alt="" style="height: 200px; weight: 200px;">
       <h3 class="text-uppercase mb-0">Por una Centroamérica abierta</h3>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Web Developer - Graphic Artist - User Experience Designer</h2>
+      <h2 class="font-weight-light mb-0"></h2>
     </div>
   </header>
 
@@ -24,7 +24,7 @@
         <div class="col-md-4 col-lg-4">
           <a href="{% url 'solicitudes:nuevaSolicitud' %}">
             	<span class="fas fa-reply  fa-8x center-block text-center fa-align-center" style="align:center;"></span>
-				<h5 class="text-uppercase mb-0">Solicitar de información individual</h5>
+				<h5 class="text-uppercase mb-0">Solicitud de información individual</h5>
           </a>
         </div>
         <div class="col-md-4 col-lg-4">
@@ -67,24 +67,7 @@
       </div>
     </div>
   </section>
-
-  <!-- About Section -->
-  <section class="bg-primary text-white mb-0" id="aboutus">
-      <div class="container">
-        <h2 class="text-center text-uppercase text-white">Sobre nosotros</h2>
-        <hr class="star-light mb-5">
-        <div class="row">
-          <div class="col-lg-4 ml-auto">
-            <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
-          </div>
-          <div class="col-lg-4 mr-auto">
-            <p class="lead">Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer text-center">
+    <footer class="footer text-center" id="aboutus">
         <div class="container">
           <div class="row">
             <div class="col-md-4 mb-5 mb-lg-0">
@@ -115,42 +98,6 @@
           </div>
         </div>
       </footer>
-
-<!-- <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="jumbotron">
-        <h1 class="display-4">GobData</h1>
-        <p class="lead">Aplicación para la gestión de solicitudes de acceso a la información pública.</p>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="card text-white bg-success mb-6">
-        <div class="card-header">Solicitud simple</div>
-        <div class="card-body">
-        <h5 class="card-title">¿Interesado en datos de una alcaldía?</h5>
-        <p class="card-text">Si te interesan datos de una alcaldía, puedes hacer clic en el botón. Puedes pedir todo lo que imagines.</p>
-        <button type="button" class="btn btn-warning">Success</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="card text-white bg-success mb-6">
-        <div class="card-header">Solicitud compuesta</div>
-        <div class="card-body">
-        <h5 class="card-title">¿Querés datos de más de una municipalidad?</h5>
-        <p class="card-text">Si lo que te interesa es enviar una misma solicitud en masa, es decir, a dos o más alcaldías a la vez, haz clic sobre el botón.</p>
-        <button type="button" class="btn btn-warning">Success</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- Finaliza cuerpo -->
-
-  <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

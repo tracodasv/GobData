@@ -1,45 +1,82 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
+{% load static %}
 
 
-{% block container %}
+{% block content %}
 <section>
-<h5>Para todo trámite con la alcaldía es requerido firma y documento de identidad</h5>
-
+<div class="container mt-5">
 <div class="row justify-content-md-center">
-        <form  method="POST" enctype="multipart/form-data">
+<div class="col-8">
+<h5>Para todo trámite con la alcaldía es requerido firma y documento de identidad</h5>
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
             {% if form.errors %}
                 <p class="alert alert-danger">{{ form.errors }}</p>
             {% endif %}
+            <div class="row">
+            <div class="col-4">
+             <img src="{% static '/firmas/firma.jpg' %}" class="img-fluid"  alt="Responsive image"> 
+             </div>
+            <div class="col-4 align-self-center"> 
+            <h5 class="media-heading">Firma legal</h5>
+                    <input type="file"  name="firma" required="true">
+            </div>
+            </div>
 
-            <div class="media" id='Firma-Div'>
-                    <img src="{% static '/firmas/firma.jpeg' %}" class="img-fluid" height="100" alt="Responsive image">                    
+{% comment %}             <div class="media" id='Firma-Div'>
+                    <img src="{% static '/firmas/firma.jpg' %}" class="img-fluid" height="50" alt="Responsive image">                    
                 <div class="media-body">
                     <h4 class="media-heading">Firma legal</h4>
-                    <p class="ml-4"><input type="file" name="firma" required="true"></p>
+                    <input type="file"  name="firma" required="true">
                 </div>
+            </div> {% endcomment %}
+            <br>
+            <div class="row">
+            <div class="col-4">
+            <img src="{% static '/documentos/duiAnterior.jpeg' %}" class="img-fluid"  alt="Responsive image">
             </div>
+            <div class="col-4 align-self-center">
+            <h5 class="media-heading">Documento (Vista Anterior)</h5>
+            <input type="file" name="documentoFotoAnterior" required="true">
+            </div>
+            </div>
+{% comment %} 
             <div class="media" id='DocumentoAnterior-Div'>
-                    <img src="{% static '/documentos/duiAnterior.jpeg' %}" class="img-fluid" height="100" alt="Responsive image">                    
+                    <img src="{% static '/documentos/duiAnterior.jpeg' %}" class="img-fluid" height="50" alt="Responsive image">                    
                 <div class="media-body">
                     <h4 class="media-heading">Documento (Vista Anterior)</h4>
                     <p class="ml-4"><input type="file" name="documentoFotoAnterior" required="true"></p>
                 </div>
+            </div> {% endcomment %}
+<br>
+            <div class="row">
+            <div class="col-4">
+                                <img src="{% static '/documentos/duiPosterior.jpeg' %}" class="img-fluid" height="50" alt="Responsive image">                    
             </div>
-            <div class="media" id='DocumentoPosterior-Div'>
-                    <img src="{% static '/documentos/duiPosterior.jpeg' %}" class="img-fluid" height="100" alt="Responsive image">                    
+            <div class="col-4 align-self-center">
+            <h5 class="media-heading">Documento (Vista Posterior)</h5>
+                <input type="file" name="documentoFotoPosterior" required="true">
+             </div>
+            </div>
+
+           {% comment %}  <div class="media" id='DocumentoPosterior-Div'>
+                    <img src="{% static '/documentos/duiPosterior.jpeg' %}" class="img-fluid" height="50" alt="Responsive image">                    
                 <div class="media-body">
                     <h4 class="media-heading">Documento (Vista Posterior)</h4>
                     <p class="ml-4"><input type="file" name="documentoFotoPosterior" required="true"></p>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary btn-block mt-5">Subir documentos</button>
+ {% endcomment %}
+  <div class="form-group text-center">
+            <button type="Submit" class="btn btn-outline-succes center btn-primary">Subir documentos</button>
+            </div>
         </form>
+        </div>
+</div>
 </div>
 </section>
 
-{% endblock  %}
+{% endblock content %}
     

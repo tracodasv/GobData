@@ -1,64 +1,62 @@
- {% extends '../base.html' %}
+{% extends '../base.html' %}
 
 
 {% block content %}
+<section>
     <div class="container mt-5">
-        <form method="post">
-        {% csrf_token %}
-        <div class="row">
-            <div class="form-group col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
-                              
-                {% if solicitante %}
-                <label for="Solicitante">Solicitante</label>
-                <input id="Solicitante" name="solicitante" class="form-control" type="text" value="{{solicitante}}" readonly>
-                <label for="email">Correo Electronico</label>
-                <input type="email" name="email" class="form-control" value="{{request.user}}" readonly>
-                {% else %}
-                <label for="Solicitante">Solicitante</label>
-                <input id="Solicitante" name="solicitante" class="form-control" type="text">
-                <label for="email">Correo Electronico</label>
-                <input type="email" name="email" class="form-control" value="">
-                {% endif %}
-
-                
-                </div>
-            <hr>
-        </div>
-        <h4>Requerimiento</h4>
-        <div class="row">
-               
-            <div class="form-group col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
-                    <label for="Departamento">Departamento</label>
-                    <select id="Departamento" name="departamento" class="form-control">
-                        <option>San Salvador</option>
-                    </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
-                <label for="Alcaldia">Alcaldia</label>
-                <select id="Alcaldia" name="alcaldia" class="form-control">
-                    <option value="San Salvador">San Salvador</option>
-                    <option value="Tds">Todas</option>
-                </select>
-            </div>
-            </div>
-
-                <br>
-                
-                <div class="row">
-                    
-                    <div class="col-xs-12 col-sm-10 col-md-6 col-lg-6 col-xl-6">
-                        <div class="form-group">
-                                <label for="Requerimiento">Que desas conocer?</label>
-                                <textarea id="Requerimiento" name="requisito" class="form-control" rows="5"></textarea>
-                        </div>
-                        <button type="Submit" class="btn col-12 btn-outline-success ">Enviar</button>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if solicitante %}
+                    <div class="form-group">
+                        <label for="Solicitante">Solicitante:</label>
+                        <input id="Solicitante" name="solicitante" class="form-control" type="text"
+                            value="{{solicitante}}" readonly>
                     </div>
-                </div>
-        </form>
-    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="email" name="email" class="form-control" value="{{request.user}}" readonly>
+                    </div>
+                    {% else %}
+                    <div class="form-group">
+                        <label for="Solicitante">Nombre completo:</label>
+                        <input id="Solicitante" name="solicitante" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="email" name="email" placeholder="alguien@ejemplo.com" class="form-control" value="">
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        {% comment %} <h4>Requerimiento</h4> {% endcomment %}
 
+                        <label for="Departamento">Departamento:</label>
+                        <select id="Departamento" name="departamento" class="form-control">
+                            <option>San Salvador</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Alcaldia">Alcaldía:</label>
+                        <select id="Alcaldia" name="alcaldia" class="form-control">
+                            <option value="San Salvador">San Salvador</option>
+                            <option value="Tds">Todas</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Requerimiento">A continuación detalle el contenido de su solicitud.</label>
+                        <textarea id="Requerimiento" name="requisito" class="form-control" rows="5"></textarea>
+                    </div>
+                     
+                    <div class="form-group text-center">
+                        <button type="Submit" class="btn btn-outline-succes center btn-primary btn-xl">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock content %}
-    

@@ -266,11 +266,13 @@ def docGen(request,idSolicitud):
     pdf = buffer.getvalue()
     buffer.close()
 
-    email = EmailMessage(subject='Hello', body='Body',to=[requerimiento.alcaldia.oficial] )
+    email = EmailMessage(subject='Solicitud de Informacion', 
+                                body='''Oficial de informacion: en uso de las facultades legales, le pido que atienda la solicitud. Correo generado con GOBDATA. \nAdjunto PDF de peticion de informacion''', 
+                                to=[requerimiento.alcaldia.oficial] )
     email.attach('Solicitud.pdf', pdf , 'application/pdf')
     email.attach('Solicitud.pdf', generador_pdf_DUI(solicitud.pk) , 'application/pdf')
 
-    #email.send()
+    email.send()
     print(email)
 
     response.write(pdf)
@@ -321,8 +323,7 @@ def solicitudesMasa(request):
             pdf = generadorDePDF(pk,requerimiento.pk)
 
             email = EmailMessage(subject='Solicitud de Informacion', 
-                                body='''Oficial de informacion: en uso de las facultades legales, le pido que atienda la solicitud. Correo generado con GOBDATA. 
-                                        Adjunto PDF de peticion de informacion''',
+                                body='''Oficial de informacion: en uso de las facultades legales, le pido que atienda la solicitud. Correo generado con GOBDATA. \nAdjunto PDF de peticion de informacion''',
                                 bcc=correos)
             email.attach('Solicitud.pdf', pdf , 'application/pdf')
             email.attach('Solicitud.pdf', generador_pdf_DUI(solicitud.pk) , 'application/pdf')

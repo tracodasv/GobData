@@ -3,8 +3,8 @@
 
 
 {% block container %}
-
-<h5>Para todo tramite con la alcaldia es reqerido Firma y documento de identidad</h5>
+<section>
+<h5>Para todo trámite con la alcaldía es requerido firma y documento de identidad</h5>
 
 <div class="row justify-content-md-center">
         <form  method="POST" enctype="multipart/form-data">
@@ -15,30 +15,31 @@
             {% endif %}
 
             <div class="media" id='Firma-Div'>
-                    <img src="{% static '/firmas/firma.jpeg' %}" class="img-responsive" height="100" alt="Image">                    
+                    <img src="{% static '/firmas/firma.jpeg' %}" class="img-fluid" height="100" alt="Responsive image">                    
                 <div class="media-body">
                     <h4 class="media-heading">Firma legal</h4>
                     <p class="ml-4"><input type="file" name="firma" required="true"></p>
                 </div>
             </div>
             <div class="media" id='DocumentoAnterior-Div'>
-                    <img src="{% static '/documentos/duiAnterior.jpeg' %}" class="img-responsive" height="100" alt="Image">                    
+                    <img src="{% static '/documentos/duiAnterior.jpeg' %}" class="img-fluid" height="100" alt="Responsive image">                    
                 <div class="media-body">
                     <h4 class="media-heading">Documento (Vista Anterior)</h4>
                     <p class="ml-4"><input type="file" name="documentoFotoAnterior" required="true"></p>
                 </div>
             </div>
             <div class="media" id='DocumentoPosterior-Div'>
-                    <img src="{% static '/documentos/duiPosterior.jpeg' %}" class="img-responsive" height="100" alt="Image">                    
+                    <img src="{% static '/documentos/duiPosterior.jpeg' %}" class="img-fluid" height="100" alt="Responsive image">                    
                 <div class="media-body">
                     <h4 class="media-heading">Documento (Vista Posterior)</h4>
                     <p class="ml-4"><input type="file" name="documentoFotoPosterior" required="true"></p>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block mt-5">Subir Documentos</button>
+            <button type="submit" class="btn btn-primary btn-block mt-5">Subir documentos</button>
         </form>
 </div>
+</section>
 
 {% endblock  %}
     

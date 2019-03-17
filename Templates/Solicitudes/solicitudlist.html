@@ -2,51 +2,80 @@
 
 
 {% block content %}
-    {% if object_list %}
+<section>
+    <div class="container mt-5">
+        {% if object_list %}
 
-        <table class="table table-bordered table-active">
-        <thead> 
-            <tr>
-                <td>Fecha de Solicitud</td>
-                <td>Peticion</td>
-                <td>Alcaldia</td>
-                <td>Fecha Propuesta de Respuesta</td>
-                <td>Ver Documento</td>
-            </tr>
-	    </thead>
-        <tbody>
-            {% for requerimiento in object_list%}
+        <div class="table-responsive">
+        <table class="table table-bordered">
+            
+            <thead class="bg-success text-uppercase mb-4 text-center textcolor-white">
+                   
+                <tr>
+                
+                    <td>Fecha de Solicitud</td>
+                    <td>Peticion</td>
+                    <td>Alcaldia</td>
+                    <td>Fecha Propuesta de Respuesta</td>
+                    <td>Ver Documento</td>
+               
+                </tr>
+            
+            </thead>
+        
+            <tbody class="lead mb-0">
+                {% for requerimiento in object_list%}
                 <tr>
                     <td>{{requerimiento.detalleSolicitud.solicitud.fechaCreacion}}</td>
                     {% if requerimiento.peticion %}{% else %}{% endif %}
-                    <td>{{requerimiento.peticion}}</td>
+                    <td class="text-justify">{{requerimiento.peticion}}</td>
                     <td>{{requerimiento.alcaldia}}</td>
                     <td>{{requerimiento.detalleSolicitud.solicitud.fechaRespuesta}}</td>
-                    <td><a href="{% url 'solicitudes:doc' idSolicitud=requerimiento.detalleSolicitud.solicitud.pk %}">Ver</a></td>
+                    <td class="text-center"><a href="{% url 'solicitudes:doc' idSolicitud=requerimiento.detalleSolicitud.solicitud.pk %}">
+                        <span class="fas fa-file-pdf  fa-2x center-block text-center fa-align-center" style="align:center;"></span>
+                    </a>
+                    </td>
                 </tr>
-            {% endfor %}
-        </tbody>
+                {% endfor %}
+            </tbody>
         </table>
-    {% else %}
+        {% else %}
         <p>No hay solicitudes</p>
-    {% endif %}
+        {% endif %}
+</div>
 
-
-    <div class="pagination align-content-center">
-        <span class="page-links">
-            {% if page_obj.has_previous %}
+        <div class="pagination align-content-center">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
                 <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-            {% endif %}
-        <span class="page-current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Next</a> 
-            {% endif %}
-        </span>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            </span>
+        </div>
     </div>
-        
-
+   <!--  <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                    2
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav> -->
+</section>
 
 {% endblock content %}
-    

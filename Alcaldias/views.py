@@ -7,11 +7,11 @@ from django.views.generic import ListView
 
 
 def index(request):
-    return render(request,"Alcaldias\municipalidades.html")
+    return render(request,"Alcaldias/municipalidades.html")
 	
 	
 class MunicipalidadesListView(ListView):
-    template_name = "Alcaldias\municipalidades.html"
+    template_name = "Alcaldias/municipalidades.html"
     paginate_by = 10
 	
     def get_queryset(self):

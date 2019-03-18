@@ -1,108 +1,113 @@
-{% extends 'base.html' %}
+{% extends 'basehome.html' %}
 
 
 
 {% block content %}
-  <!-- Header -->
-  <header class="masthead bg-primary text-white text-center">
-    <div class="container">
-      <img class="img-fluid mb-5 d-block mx-auto" src="static/img/profile.png" alt="" style="height: 200px; weight: 200px;">
-      <h3 class="text-uppercase mb-0">Por una Centroamérica abierta</h3>
-      <hr class="star-light">
-      <h2 class="font-weight-light mb-0"></h2>
-    </div>
-  </header>
+<!-- Header -->
+<header class="masthead bg-primary text-white text-center">
+  <div class="container">
+    <img class="img-fluid mb-5 d-block mx-auto" src="static/img/profile.png" alt=""
+      style="height: 200px; width: 200px;">
+    <h3 class="text-uppercase mb-0">Por una Centroamérica abierta</h3>
+    <hr class="star-light">
+    <h2 class="font-weight-light mb-0"></h2>
+  </div>
+</header>
 
-  <!-- Portfolio Grid Section -->
-  <section class="portfolio" id="portfolio">
-    <div class="container">
-      <h2 class="text-center text-uppercase text-secondary mb-0">Herramientas</h2>
-      <hr class="star-dark mb-5">
-      
-      <div class="row text-center">
-        <div class="col-md-2 col-lg-2"></div>
-        <div class="col-md-4 col-lg-4">
-          <a href="{% url 'solicitudes:nuevaSolicitud' %}">
-            	<span class="fas fa-reply  fa-8x center-block text-center fa-align-center" style="align:center;"></span>
-				<h5 class="text-uppercase mb-0">Solicitud de información individual</h5>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-4">
-          <a href="{% url 'solicitudes:solicitudesMasa' %}">
-                <span class="fas fa-reply-all  fa-8x center-block text-center" style="align:center;"></span>
-				<h5 class="text-uppercase mb-0">Solicitud de información multiple</h5>
-          </a>
-        </div>
-        <div class="col-md-2 col-lg-2"></div>
+<!-- Portfolio Grid Section -->
+<section class="portfolio" id="portfolio">
+  <div class="container">
+    <h2 class="text-center text-uppercase text-secondary mb-0">Herramientas</h2>
+    <hr class="star-dark mb-5">
+
+    <div class="row text-center">
+      <div class="col-md-2 col-lg-2"></div>
+      <div class="col-md-4 col-lg-4">
+        <a href="{% url 'solicitudes:nuevaSolicitud' %}">
+          <span class="fas fa-reply  fa-6x center-block text-center fa-align-center"></span>
+          <h5 class="text-uppercase mb-0">Solicitud de información individual</h5>
+        </a>
       </div>
-      <hr>
-        <div class="row text-center">
-            <div class="col-md-3 col-lg-3">
-                <a class="portfolio-item d-block mx-auto center-block text-center" href="#portfolio-modal-3">
-                  <span class="fas fa-university fa-8x center-block text-center" style="align:center;"></span>
-              <h5 class="text-uppercase mb-0">Municipalidades</h5>
-                </a>
-              </div>
-          <div class="col-md-3 col-lg-3">
-              <a class="portfolio-item d-block mx-auto center-block text-center" href="#portfolio-modal-1">
-                  <span class="fas fa-database fa-8x center-block text-center" style="align:center;"></span>
-              <h5 class="text-uppercase mb-0">Datasets</h5>
-                </a>
-          </div>
-          <div class="col-md-3 col-lg-3">
-              <a class="portfolio-item d-block mx-auto center-block text-center" href="#portfolio-modal-1">
-                  <span class="fas fa-search fa-8x center-block text-center" style="align:center;"></span>
-              <h5 class="text-uppercase mb-0">Buscador de empleados</h5>
-                </a>
-          </div>
-          <div class="col-md-3 col-lg-3 ">
-              <a class="portfolio-item d-block mx-auto center-block text-center" href="#portfolio-modal-1">
-                   <span class="fa fa-search-dollar fa-8x center-block text-center" style="align:center;"></span>
-              <h5 class="text-uppercase mb-0">Buscador de patrimonio</h5>
-                </a>
-          </div>
-
-        </div>
-
+      <div class="col-md-4 col-lg-4">
+        <a href="{% url 'solicitudes:solicitudesMasa' %}">
+          <span class="fas fa-reply-all  fa-6x center-block text-center"></span>
+          <h5 class="text-uppercase mb-0">Solicitud de información multiple</h5>
+        </a>
+      </div>
+      <div class="col-md-2 col-lg-2"></div>
+    </div>
+    <hr>
+    <div class="row text-center">
+      <div class="col-md-3 col-lg-3">
+        <a href="{% url 'alcaldias:solicitudes' pk=1%}">
+          <span class="fas fa-university fa-6x center-block text-center"></span>
+          <h5 class="text-uppercase mb-0">Municipalidades</h5>
+        </a>
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <a href="#">
+          <span class="fas fa-database fa-6x center-block text-center"></span>
+          <h5 class="text-uppercase mb-0">Datasets</h5>
+        </a>
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <a href="http://www.gobdata.com/empleados/">
+          <span class="fas fa-search fa-6x center-block text-center"></span>
+          <h5 class="text-uppercase mb-0">Buscador de empleados</h5>
+        </a>
+      </div>
+      <div class="col-md-3 col-lg-3 ">
+        <!-- <a href="#"> -->
+          <span class="fa fa-search-dollar fa-6x center-block text-center "></span>
+          <h5 class="text-uppercase mb-0">Buscador de patrimonio</h5>
+       <!--  </a> -->
       </div>
     </div>
-  </section>
-    <footer class="footer text-center" id="aboutus">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4 mb-5 mb-lg-0">
-              <h4 class="text-uppercase mb-4">Contactanos</h4>
-              <p class="lead mb-0">
-                <br>@Tracodasv</p>
-            </div>
-            <div class="col-md-4 mb-5 mb-lg-0">
-              <h4 class="text-uppercase mb-4">Nuestras redes sociales</h4>
-              <ul class="list-inline mb-0">
-                <li class="list-inline-item">
-                  <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.facebook.com/tracodasv/">
-                    <i class="fab fa-fw fa-facebook-f"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/gobdata">
-                    <i class="fab fa-fw fa-twitter"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-4">
-              <h4 class="text-uppercase mb-4">Sobre nosotros</h4>
-              <p class="lead mb-0">GobData es la iniciativa de <a href="http://tracoda.info">TRACODA</a>
-                por los datos abiertos y el software libre en Centroamérica.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  </div>
+  </div>
+</section>
+<footer class="footer text-center" id="aboutus">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-5 mb-lg-0">
+        <h4 class="text-uppercase mb-4">Contactanos</h4>
+        <p class="lead mb-0">
+          <br>@Tracodasv</p>
+      </div>
+      <div class="col-md-4 mb-5 mb-lg-0">
+        <h4 class="text-uppercase mb-4">Nuestras redes sociales</h4>
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item">
+            <a class="btn btn-outline-light btn-social text-center rounded-circle"
+              href="https://www.facebook.com/tracodasv/">
+              <i class="fab fa-fw fa-facebook-f"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/gobdata">
+              <i class="fab fa-fw fa-twitter"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h4 class="text-uppercase mb-4">Sobre nosotros</h4>
+        <p class="lead mb-0">GobData es la iniciativa de <a href="http://tracoda.info">TRACODA</a>
+          por los datos abiertos y el software libre en Centroamérica.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+  integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+  integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>
+
 </html>
 
 {% endblock content %}

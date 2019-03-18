@@ -22,6 +22,12 @@
             <label >Contraseña:</label>
             <input class="form-control" type="password" placeholder="Ingrese su contraseña" name="password" />
         </div>
+        
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{request.GET.next}}">
+        {% endif %}
+            
+
         {% if error %}
     
         <div class="alert alert-danger">

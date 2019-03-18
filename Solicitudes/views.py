@@ -23,6 +23,8 @@ from math import ceil
 from django.core.mail import EmailMessage
 from django.views.generic import ListView
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+
 
 def home_view(request):
     return render(request,'home.html')
@@ -279,7 +281,7 @@ def docGen(request,idSolicitud):
 
     return response
 
-
+@login_required
 def solicitudesMasa(request):
 
     form = MultiRequerimiento(request.POST)

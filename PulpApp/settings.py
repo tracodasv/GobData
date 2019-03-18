@@ -150,3 +150,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'robma96@gmail.com'
 EMAIL_HOST_PASSWORD = 'BobMarley96'
 EMAIL_PORT = 587
+
+
+LOGIN_URL='usuarios:login'
+LOGIN_REDIRECT_URL='usuarios:login'

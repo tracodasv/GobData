@@ -38,7 +38,10 @@ def login_form(request):
         user = authenticate(request,username=username,password=password)
         if user:
             login(request,user)
-            return redirect ('solicitudes:nuevaSolicitud')
+            if 'next' in request.POST:
+                return redirect(request.POST['next'])
+            else:
+                return redirect ('solicitudes:nuevaSolicitud')
         else:
             return render(request,'Usuarios/login.html',{   'error':'Usuario o contrasena invalidos',
                                                             'User':request.user.is_authenticated})
